@@ -1,0 +1,6 @@
+# general
+[Dd]ata/*
+[Ss]ongs/*
+![Dd]ata/[Ee]vents/
+[Ii]mages/
+!*.hx
