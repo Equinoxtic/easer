@@ -125,7 +125,8 @@ function onEvent(event):Void {
 }
 
 function setLensDistortion(?intensity:Null<Float> = 0.01, ?area:Null<Float> = -0.1, ?offset:Null<Float> = 0.025, ?multiplier:Null<Float> = 1.0):Void {
-	lensDistortionTween.forceCancel();
+	if (lensDistortionTween != null)
+		lensDistortionTween.forceCancel();
 	lensDistortionShader.intensity = intensity * multiplier;
 	lensDistortionShader.area = area * multiplier;
 	lensDistortionShader.offset = offset * multiplier;
