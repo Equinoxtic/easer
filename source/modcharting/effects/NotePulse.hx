@@ -27,6 +27,7 @@ class NotePulse extends BasicEffect {
 				this.pulseRotate();
 			});
 		});
+		this.destroy();
 	}
 	
 	private function pulseDrunkTipsy():Void {

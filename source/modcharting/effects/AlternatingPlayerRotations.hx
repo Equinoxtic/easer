@@ -17,6 +17,7 @@ class AlternatingPlayerRotations extends BasicEffect {
 				this.manager.ease('centerRotateX', beat, this.duration, value, this.ease);
 			});
 		});
+		this.destroy();
 	}
 	
 	private function setupReverse(beat:Int):Void {

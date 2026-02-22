@@ -14,5 +14,6 @@ class AlternatingInvert extends BasicEffect {
 				this.manager.ease(ModIDs.INVERT, beat, this.duration, (!this.inverse) ? 1.0 : 0.0, this.ease, this.player);
 			});
 		});
+		this.destroy();
 	}
 }

@@ -20,6 +20,8 @@ class BasicEffect {
 	
 	public var beat:Int = 0;
 	
+	private var callbacks:Array<Dynamic> = [];
+	
 	/**
 		Create a new custom modchart effect.
 		@param manager The manager instance for modcharts
@@ -44,7 +46,7 @@ class BasicEffect {
 	public function onBeat(?func:Null<(beat:Int)->Void>):Void {
 		if (func == null) return;
 		for (beat in this.iterateBeatRange()) {
-			func(beat);
+			callbacks.push(func(beat));
 		}
 	}
 	
@@ -57,9 +59,18 @@ class BasicEffect {
 	public function perModOfBeat(beat:Int, ?mod:Null<Int> = 4, ?func:Null<(beat:Int)->Void>):Void {
 		if (this.getModulo(beat, (mod != null && mod > 0) ? mod : this.modulus)) {
 			this.beat = beat;
-			func(this.beat);
+			callbacks.push(func(this.beat));
 			this.inverse = !this.inverse;
 		}
+	}
+	
+	public function destroy():Void {
+		this.manager = null;
+		if (this.parameters != null)
+			this.parameters = null;
+		for (f in callbacks)
+			f = null;
+		this = null;
 	}
 	
 	/**

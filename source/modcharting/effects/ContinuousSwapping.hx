@@ -19,5 +19,6 @@ class ContinuousSwapping extends BasicEffect {
 				if (this.pos > this.MAX_POS) this.pos = 0;
 			});
 		});
+		this.destroy();
 	}
 }

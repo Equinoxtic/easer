@@ -15,5 +15,6 @@ class AlternatingBounce extends BasicEffect {
 			});
 		});
 		this.manager.ease('bounceX', this.beatRange[1], 1.5, 0.0, this.ease, this.player);
+		this.destroy();
 	}
 }

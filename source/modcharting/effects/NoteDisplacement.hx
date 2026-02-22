@@ -32,6 +32,7 @@ class NoteDisplacement extends BasicEffect {
 			});
 			this.perModOfBeat(beat, (this.modulus * 2), (beat:Int) -> this.trueInverse = !this.trueInverse);
 		});
+		this.destroy();
 	}
 	
 	public function tornadoPulse():Void {
