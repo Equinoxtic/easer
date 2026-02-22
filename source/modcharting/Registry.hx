@@ -17,6 +17,7 @@ class Registry {
 		ModIDs.SCALE => {},
 		ModIDs.ZOOM => {},
 		ModIDs.BOUNCE => {},
+		ModIDs.TORNADO => {},
 		ModIDs.CENTERROTATE => {}
 	];
 	

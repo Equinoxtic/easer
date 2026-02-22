@@ -20,4 +20,5 @@ class ModIDs {
 	public static final SCALE:String 			= 'Scale';
 	public static final SKEW:String 			= 'Skew';
 	public static final ALPHA:String 			= 'Alpha';
+	public static final TORNADO:String			= 'Tornado';
 }
