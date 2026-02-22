@@ -39,6 +39,11 @@ function update(elapsed:Float):Void {
 	windowHandler.update();
 }
 
+function postUpdate(elapsed:Float):Void {
+	if (endingSong)
+		windowHandler.destroy();
+}
+
 function onEvent(event):Void {
 	var curEvent = event.event;
 	switch (curEvent.name) {

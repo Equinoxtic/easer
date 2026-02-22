@@ -11,11 +11,14 @@ class WindowHandler {
 	public var windowInstance;
 	public var active:Bool;
 	
-	private var sineWaveEnabled:Bool;
-	private var waveAmplitude:Float;
-	private var waveFrequency:Float;
-	private var waveDampeningX:Float;
-	private var waveDampeningY:Float;
+	private var sineWaveEnabled:Bool = false;
+	private var waveAmplitude:Float = 100;
+	private var waveFrequency:Float = 1.0;
+	private var waveDampeningX:Float = 1.0;
+	private var waveDampeningY:Float = 1.0;
+	
+	private var posTween:Tween;
+	private var sizeTween:Tween;
 	
 	public function new() {
 		this.windowInstance = Application.current.window;
@@ -46,11 +49,11 @@ class WindowHandler {
 	}
 	
 	public function tweenedPosition(x:Int, y:Int, duration:Float, ease:String, tweenType:String):Void {
-		var posTween:Tween = new Tween(this.windowInstance, {x: x, y: y}, duration, ease, tweenType).play();
+		this.posTween = new Tween(this.windowInstance, {x: x, y: y}, duration, ease, tweenType).play();
 	}
 	
 	public function tweenedResize(width:Int, height:Int, duration:Float, ease:String, tweenType:String):Void {
-		var sizeTween:Tween = new Tween(this.windowInstance, {width: width, height: height}, duration, ease, tweenType).play();
+		this.sizeTween = new Tween(this.windowInstance, {width: width, height: height}, duration, ease, tweenType).play();
 	}
 	
 	public function sineWave(amplitude:Float, frequency:Float):Void {
@@ -85,5 +88,13 @@ class WindowHandler {
 	
 	public function setBorderless(isBorderless:Bool):Void {
 		this.windowInstance.borderless = isBorderless;
+	}
+	
+	public function destroy():Void {
+		this.reset();
+		this.posTween.destroy();
+		this.sizeTween.destroy();
+		this.windowInstance = null;
+		this = null;
 	}
 }
