@@ -70,6 +70,9 @@ class BasicEffect {
 		return (this.beatRange[0]...(this.beatRange[1] + 1));
 	}
 	
+	/**
+		Gets `n mod beat`.
+	**/
 	private function getModulo(beat:Int, ?mod:Null<Int> = 4):Int {
 		return ((beat % mod) == 0);
 	}
