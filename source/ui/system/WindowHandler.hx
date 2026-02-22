@@ -23,6 +23,7 @@ class WindowHandler {
 	}
 	
 	public function update():Void {
+		if (PlayState.instance.paused) return;
 		if (!active) return;
 		sineWave(this.waveAmplitude, this.waveFrequency);
 	}
@@ -53,11 +54,10 @@ class WindowHandler {
 	}
 	
 	public function sineWave(amplitude:Float, frequency:Float):Void {
-		if (this.sineWaveEnabled) {
-			var newX:Int = Std.int(FlxMath.lerp(this.windowInstance.x, Constants.DEFAULT_WINDOW_X + ((amplitude / this.waveDampeningX) * Math.cos(Wave.create(frequency))), 0.1));
-			var newY:Int = Std.int(FlxMath.lerp(this.windowInstance.y, Constants.DEFAULT_WINDOW_Y + ((amplitude / this.waveDampeningY) * Math.sin(Wave.create(frequency))), 0.1));
-			this.position(newX, newY);
-		}
+		if (!this.sineWaveEnabled) return;
+		var newX:Int = Std.int(FlxMath.lerp(this.windowInstance.x, Constants.DEFAULT_WINDOW_X + ((amplitude / this.waveDampeningX) * Math.cos(Wave.create(frequency))), 0.1));
+		var newY:Int = Std.int(FlxMath.lerp(this.windowInstance.y, Constants.DEFAULT_WINDOW_Y + ((amplitude / this.waveDampeningY) * Math.sin(Wave.create(frequency))), 0.1));
+		this.position(newX, newY);
 	}
 	
 	public function setSineWaveState(state:Bool):Void {
