@@ -18,7 +18,7 @@
 		{
 			"name": "Tween Time (Steps, IF NOT CLASSIC)",
 			"type": "Float(0.1, 9999, 0.1, 1)",
-			"defaultValue": 1
+			"defaultValue": 4
 		},
 		{
 			"name": "Tween Ease (ex: circ, quad, cube)",
