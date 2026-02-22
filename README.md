@@ -1,13 +1,13 @@
 # Solar Engine V4
 
-Solar Engine (V4, without predecessors) is a framework/API with the purpose of making the process of creating modcharts easier. This is only exclusive for [Codename Engine], and is mostly intended for *softcoded* scripts (hscripts).
+Solar Engine (V4, without predecessors) is a framework/API with the purpose of making the process of creating modcharts easier; built on-top of [FunkinModchart](https://github.com/theoo-h/FunkinModchart/tree/main). This is only exclusive for [Codename Engine](https://github.com/CodenameCrew/CodenameEngine), and is mostly intended for [*softcoded* scripts (hscripts)](https://codename-engine.com/wiki/modding/scripting/).
 
 ## Prerequisites
 
 1. Must have knowledge of modding in CNE.
-2. Required knowledge of NotITG modcharts AND FunkinModchart.
+2. Required knowledge of [NotITG](https://www.noti.tg/) modcharts AND FunkinModchart.
 3. Basic knowledge of programming in Haxe.
 
 ## Documentation
 
-Documentation is available in the source code. However, it is advised you head to DOC.md for how to set up the API + more advanced implementations such as custom *effects* and *events*.
+Documentation is available in the source code. However, it is advised you head to [DOC.md](https://github.com/Equinoxtic/solar-engine/blob/mistress/DOC.md) for how to set up the API + more advanced implementations such as custom *effects* and *events*.
