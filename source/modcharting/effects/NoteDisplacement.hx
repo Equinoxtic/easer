@@ -30,7 +30,7 @@ class NoteDisplacement extends BasicEffect {
 				this.tornadoPulse();
 				this.alternate = !this.alternate;
 			});
-			this.perModOfBeat(beat, (this.modulus * 2), (beat:Int) -> this.trueInverse = !this.trueInverse;
+			this.perModOfBeat(beat, (this.modulus * 2), (beat:Int) -> this.trueInverse = !this.trueInverse
 		});
 	}
 	
