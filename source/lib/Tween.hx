@@ -22,10 +22,14 @@ class Tween {
 	}
 	
 	public function play():Tween {
-		if (this.localized != null)
-			this.localized.cancel();
+		this.forceCancel();
 		this.localized = this.make();
 		return this;
+	}
+	
+	public function forceCancel():Void {
+		if (this.localized != null)
+			this.localized.cancel();
 	}
 	
 	public function setState(state:Bool):Void {
