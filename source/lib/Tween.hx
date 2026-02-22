@@ -1,7 +1,5 @@
 package lib;
 
-// import lib.TweenManager;
-
 class Tween {
 	public var localized:FlxTween;
 	
@@ -12,14 +10,9 @@ class Tween {
 	public var ease:String = 'linear';
 	public var tweenType:String = 'Out';
 	
-	// public var manager:TweenManager = null;
-	
 	public function new(object:Dynamic, values:Dynamic, duration:Dynamic, ease:String, tweenType:String, ?startDelay:Null<Float> = 1.0) {
 		if (object == null || values == null)
 			return;
-		
-		// this.manager = new TweenManager();
-		
 		this.object = object;
 		this.values = values;
 		this.duration = (duration != null) ? duration : this.duration;
