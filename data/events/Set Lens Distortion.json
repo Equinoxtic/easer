@@ -1,0 +1,19 @@
+{
+	"params": [
+		{
+			"name": "Intensity (min: -1.0, max: 1.0)",
+			"type": "Float(-1.0, 1.0, 0.001, 3)",
+			"defaultValue": 0.01
+		},
+		{
+			"name": "Area (min: -1.0, max: 1.0)",
+			"type": "Float(-1.0, 1.0, 0.001, 3)",
+			"defaultValue": -0.1
+		},
+		{
+			"name": "Color Offset (min: -1.0, max: 1.0)",
+			"type": "Float(-1.0, 1.0, 0.001, 3)",
+			"defaultValue": 0.025
+		}
+	]
+}

@@ -1,0 +1,19 @@
+{
+	"params": [
+		{
+			"name": "Initial Multiplier",
+			"type": "Float(1.0, 256.0, 0.1, 1)",
+			"defaultValue": 1.0
+		},
+		{
+			"name": "End Multiplier",
+			"type": "Float(0.0, 256.0, 0.1, 1)",
+			"defaultValue": 1.0
+		},
+		{
+			"name": "Duration (in STEPS)",
+			"type": "Float(0.01, 9999.0, 0.01, 2)",
+			"defaultValue": 4
+		}
+	]
+}

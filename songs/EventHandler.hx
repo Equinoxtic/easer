@@ -66,6 +66,27 @@ function onEvent(event):Void {
 			savedLensDistortArea = parameters.area;
 			savedLensDistortOffset = parameters.offset;
 			tweenLensDistortion(parameters.intensity, parameters.area, parameters.offset, parameters.duration, parameters.ease, parameters.tweenType);
+		case 'Set Lens Distortion':
+			var parameters:Dynamic = {
+				intensity:				curEvent.params[0],
+				area:					curEvent.params[1],
+				offset:					curEvent.params[2]
+			};
+			savedLensDistortIntensity = parameters.intensity;
+			savedLensDistortArea = parameters.area;
+			savedLensDistortOffset = parameters.offset;
+			setLensDistortion(parameters.intensity, parameters.area, parameters.offset, 1.0);
+		case 'Pulse Lens Distortion':
+			var parameters:Dynamic = {
+				initialMultiplier:		curEvent.params[0],
+				endMultiplier:			curEvent.params[1],
+				duration:				curEvent.params[2]
+			};
+			var intensity:Float = savedLensDistortIntensity * parameters.endMultiplier;
+			var area:Float = savedLensDistortArea * parameters.endMultiplier;
+			var offset:Float = savedLensDistortOffset * parameters.endMultiplier;
+			setLensDistortion(savedLensDistortIntensity, savedLensDistortArea, savedLensDistortOffset, parameters.initialMultiplier);
+			tweenLensDistortion(intensity, area, offset, parameters.duration, "expo", "Out");
 		case 'Tween Window Size':
 			var parameters:Dynamic = {
 				width:					curEvent.params[0],
