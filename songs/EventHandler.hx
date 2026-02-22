@@ -13,6 +13,14 @@ var lensDistortionTween:Tween;
 
 var windowHandler:WindowHandler;
 
+final DEFAULT_LENS_DISTORT_INTENSITY:Float = 0.015;
+final DEFAULT_LENS_DISTORT_AREA:Float = -0.2;
+final DEFAULT_LENS_DISTORT_OFFSET:Float = 0.03;
+
+var savedLensDistortIntensity:Float;
+var savedLensDistortArea:Float;
+var savedLensDistortOffset:Float;
+
 function create():Void {
 	windowHandler = new WindowHandler();
 	invertShader = new CustomShader('invertColor');
@@ -36,10 +44,8 @@ function onEvent(event):Void {
 			};
 			if (parameters.enabled) {
 				camGame.addShader(invertShader);
-				setLensDistortion(0.015, -0.12, 0.03);
 			} else {
 				camGame.removeShader(invertShader);
-				resetLensDistortion(false);
 			}
 		case 'Tween Lens Distortion':
 			var parameters:Dynamic = {
@@ -56,6 +62,10 @@ function onEvent(event):Void {
 				offset: parameters.offset
 			}, parameters.duration, parameters.ease, parameters.tweenType);
 			lensDistortionTween.play();
+			savedLensDistortIntensity = parameters.intensity;
+			savedLensDistortArea = parameters.area;
+			savedLensDistortOffset = parameters.offset;
+			tweenLensDistortion(parameters.intensity, parameters.area, parameters.offset, parameters.duration, parameters.ease, parameters.tweenType);
 		case 'Tween Window Size':
 			var parameters:Dynamic = {
 				width:					curEvent.params[0],
@@ -93,10 +103,20 @@ function onEvent(event):Void {
 	}
 }
 
-function setLensDistortion(?intensity:Null<Float> = 0.01, ?area:Null<Float> = -0.1, ?offset:Null<Float> = 0.025):Void {
-	lensDistortionShader.intensity = intensity;
-	lensDistortionShader.area = area;
-	lensDistortionShader.offset = offset;
+function setLensDistortion(?intensity:Null<Float> = 0.01, ?area:Null<Float> = -0.1, ?offset:Null<Float> = 0.025, ?multiplier:Null<Float> = 1.0):Void {
+	lensDistortionTween.forceCancel();
+	lensDistortionShader.intensity = intensity * multiplier;
+	lensDistortionShader.area = area * multiplier;
+	lensDistortionShader.offset = offset * multiplier;
+}
+
+function tweenLensDistortion(?intensity:Null<Float> = 0.01, ?area:Null<Float> = -0.1, ?offset:Null<Float> = 0.025, ?duration:Null<Float> = 1.0, ?ease:Null<String> = 'linear', ?tweenType:Null<String> = 'In'):Void {
+	lensDistortionTween = new Tween(lensDistortionShader, {
+		intensity: intensity,
+		area: area,
+		offset: offset
+	}, duration, ease, tweenType);
+	lensDistortionTween.play();
 }
 
 function resetLensDistortion(removeShader:Bool = false):Void {
