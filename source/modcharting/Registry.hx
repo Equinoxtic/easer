@@ -9,6 +9,7 @@ class Registry {
 		ModIDs.BEAT => {},
 		ModIDs.INVERT => {},
 		ModIDs.OPPONENTSWAP => {},
+		ModIDs.TRANSFORM => {},
 		ModIDs.REVERSE => {},
 		ModIDs.SPIRAL => {},
 		ModIDs.BEAT => {},
