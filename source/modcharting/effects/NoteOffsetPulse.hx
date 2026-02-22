@@ -9,7 +9,7 @@ class NoteOffsetPulse extends BasicEffect {
 	private final X_OFFSET_KEY:String = 'x';
 	private final Y_OFFSET_KEY:String = 'y';
 	private final OFFSET:Float = 30;
-	private final TORNADO_VALUE:Float = 0.9;
+	private final TORNADO_VALUE:Float = 0.7;
 	private var offsetValue:Float = 0;
 	private final STRUM_DATA:Map<Int, Dynamic> = [
 		0 => {	x: -1.0,	y: 1.0	},
@@ -26,11 +26,10 @@ class NoteOffsetPulse extends BasicEffect {
 		this.onBeat((beat:Int) -> {
 			this.perModOfBeat(beat, null, (beat:Int) -> {
 				this.spaceOut();
-				if (alternate)
-					tornadoPulse();
+				this.tornadoPulse();
 				this.alternate = !this.alternate;
 			});
-			this.perModOfBeat(beat, 4, (beat:Int) -> {
+			this.perModOfBeat(beat, (this.modulus * 2), (beat:Int) -> {
 				this.trueInverse = !this.trueInverse;
 			});
 		});
@@ -38,7 +37,7 @@ class NoteOffsetPulse extends BasicEffect {
 	
 	public function tornadoPulse():Void {
 		if (!this.tornadoEnabled) return;
-		this.manager.set(ModIDs.TORNADO, this.beat, TORNADO_VALUE * this.value, this.player);
+		this.manager.set(ModIDs.TORNADO, this.beat, ((!this.inverse) ? this.TORNADO_VALUE : -this.TORNADO_VALUE) * this.value, this.player);
 		this.manager.ease(ModIDs.TORNADO, this.beat, this.duration, 0.0, this.ease, this.player);
 	}
 	
