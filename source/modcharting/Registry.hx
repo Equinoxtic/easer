@@ -21,9 +21,19 @@ class Registry {
 		ModIDs.CENTERROTATE => {}
 	];
 	
+	/**
+		Registers a list of modifiers for a modchart manager.
+		@param modMap The list of modifiers to apply
+		@param manager The manager instace for modcharts
+		@returns `Map<String, Dynamic>`
+	**/
 	public static function subscribe(modMap:Map<String, Dynamic>, manager:String):Map<String, Dynamic> {
 		for (mod => data in modMap) {
 			manager.addModifier(mod);
+			if (data.value != null) {
+				var field:Int = (data.player != null) ? data.player : -1;
+				manager.setPercent(mod, data.value, field);
+			}
 		}
 		return modMap;
 	}
