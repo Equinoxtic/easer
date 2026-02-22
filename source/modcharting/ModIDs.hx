@@ -1,3 +1,12 @@
+/**
+	
+	INFO!
+	- You can add and modify IDs here, as this class basically serves to store these IDs as constants.
+	- NOTE: When adding IDs, please refer to the list of available FunkinModchart modifiers.
+	- https://github.com/theoo-h/FunkinModchart/tree/main/modchart/engine/modifiers/list
+	
+**/
+
 package modcharting;
 
 class ModIDs {
