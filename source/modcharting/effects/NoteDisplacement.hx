@@ -5,21 +5,22 @@ import modcharting.ModIDs;
 
 import modcharting.BasicEffect;
 
-class NoteOffsetPulse extends BasicEffect {
-	private final X_OFFSET_KEY:String = 'x';
-	private final Y_OFFSET_KEY:String = 'y';
-	private final OFFSET:Float = 30;
-	private final TORNADO_VALUE:Float = 0.7;
-	private var offsetValue:Float = 0;
+class NoteDisplacement extends BasicEffect {
 	private final STRUM_DATA:Map<Int, Dynamic> = [
 		0 => {	x: -1.0,	y: 1.0	},
 		1 => {	x: -0.5,	y: -1.0	},
 		2 => {	x: 0.5,		y: 1.0	},
 		3 => {	x: 1.0,		y: -1.0	}
 	];
+	private final X_OFFSET_KEY:String = 'x';
+	private final Y_OFFSET_KEY:String = 'y';
+	private final OFFSET:Float = 30;
+	private final TORNADO_VALUE:Float = 0.7;
+	private var offsetValue:Float = 0;
 	private var tornadoEnabled:Bool = false;
 	private var alternate:Bool = false;
 	private var trueInverse:Bool = false;
+	
 	public function new(manager:Manager, params:Dynamic) {
 		super(manager, params);
 		this.tornadoEnabled = params.tornadoEnabled;
@@ -29,9 +30,7 @@ class NoteOffsetPulse extends BasicEffect {
 				this.tornadoPulse();
 				this.alternate = !this.alternate;
 			});
-			this.perModOfBeat(beat, (this.modulus * 2), (beat:Int) -> {
-				this.trueInverse = !this.trueInverse;
-			});
+			this.perModOfBeat(beat, (this.modulus * 2), (beat:Int) -> this.trueInverse = !this.trueInverse;
 		});
 	}
 	
