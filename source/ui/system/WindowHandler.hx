@@ -26,8 +26,7 @@ class WindowHandler {
 	}
 	
 	public function update():Void {
-		if (PlayState.instance.paused) return;
-		if (!active) return;
+		if (!this.active) return;
 		sineWave(this.waveAmplitude, this.waveFrequency);
 	}
 	
