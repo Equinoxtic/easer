@@ -1,0 +1,34 @@
+{
+	"params": [
+		{
+			"name": "Is Enabled?",
+			"type": "Bool",
+			"defaultValue": true
+		},
+		{
+			"name": "Is Window Affected?",
+			"type": "Bool",
+			"defaultValue": false
+		},
+		{
+			"name": "Player Affected",
+			"type": "StrumLine",
+			"defaultValue": 0
+		},
+		{
+			"name": "Target Camera",
+			"type": "DropDown(['camGame', 'camHUD'])",
+			"defaultValue": "camGame"
+		},
+		{
+			"name": "Shake Intensity",
+			"type": "Float(0.001, 999.0, 0.001, 3)",
+			"defaultValue": 0.05
+		},
+		{
+			"name": "Shake Duration",
+			"type": "Float(0.001, 999.0, 0.001, 3)",
+			"defaultValue": 0.5
+		}
+	]
+}

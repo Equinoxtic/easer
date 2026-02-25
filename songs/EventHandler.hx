@@ -23,6 +23,16 @@ var savedLensDistortOffset:Float;
 
 var shadersEnabled:Bool = Options.gameplayShaders;
 
+var playerCameraShake:Bool = false;
+var opponentCameraShake:Bool = false;
+
+var shakeMap:Map<String, { camera:String, intensity:Float, duration:Float, active:Bool }> = [];
+
+final TARGET_CAMERAS:Map<String, FlxCamera> = [
+	'camGame'	=> camGame,
+	'camHUD'	=> camHUD
+];
+
 function create():Void {
 	windowHandler = new WindowHandler();
 	if (shadersEnabled) {
@@ -43,6 +53,8 @@ function postUpdate(elapsed:Float):Void {
 	if (endingSong)
 		windowHandler.destroy();
 }
+
+function onNoteHit(e:NoteHitEvent):Void { shakeCamFor(e.character); }
 
 function onEvent(event):Void {
 	var curEvent = event.event;
@@ -124,7 +136,31 @@ function onEvent(event):Void {
 			var text:FunkinText = new GhostTappingStateText();
 			text.cameras = [camHUD];
 			add(text);
+		case 'Singing Shake Toggle':
+			var parameters = {
+				enabled:				curEvent.params[0],
+				windowAffected:			curEvent.params[1],
+				strumLine:				curEvent.params[2],
+				targetCamera:			curEvent.params[3],
+				intensity:				curEvent.params[4],
+				duration:				curEvent.params[5]
+			};
+			shakeMap.set(strumLines.members[parameters.strumLine].characters[0].curCharacter, { 
+				camera: parameters.targetCamera,
+				intensity: parameters.intensity,
+				duration: parameters.duration,
+				active: parameters.enabled
+			});
 	}
+}
+
+function shakeCamFor(character:Character):Void {
+	if (shakeMap.get(character.curCharacter) == null)
+		return;
+	var data = shakeMap.get(character.curCharacter);
+	if (!data.active)
+		return;
+	TARGET_CAMERAS.get(data.camera).shake(data.intensity, data.duration);
 }
 
 function setLensDistortion(?intensity:Null<Float> = 0.01, ?area:Null<Float> = -0.1, ?offset:Null<Float> = 0.025, ?multiplier:Null<Float> = 1.0):Void {
