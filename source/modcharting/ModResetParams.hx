@@ -19,7 +19,7 @@ class ModResetParams {
 		this.beat = beat;
 		this.length = length;
 		this.ease = ease;
-		this.player = player;
+		this.player = (player != null) ? player : -1;
 	}
 }
 
