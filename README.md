@@ -6,8 +6,8 @@ Solar Engine is a framework/API with the purpose of making the process of creati
 
 1. Must have knowledge of modding in CNE.
 2. Required knowledge of [NotITG](https://www.noti.tg/) modcharts AND FunkinModchart.
-3. Basic knowledge of programming in Haxe.
+3. Basic/Intermediate knowledge of programming in Haxe.
 
 ## Documentation
 
-Documentation is available in the source code. However, it is advised you head to [DOC.md](https://github.com/Equinoxtic/solar-engine/blob/mistress/DOC.md) for how to set up the API + more advanced implementations such as custom *effects* and *events*.
+Documentation is available in the source code. However, it is advised you head to this repository's wiki for how to set up the API + more advanced implementations such as custom *effects* and *events*.
