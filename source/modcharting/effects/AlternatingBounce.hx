@@ -11,7 +11,7 @@ class AlternatingBounce extends BasicEffect {
 		this.manager.setPercent('bounceSpeed', this.parameters.speed);
 		this.onBeat((beat:Int) -> {
 			this.perModOfBeat(beat, null, (beat:Int) -> {
-				this.manager.ease('bounceX', beat, this.duration, (!this.inverse) ? this.value : -this.value, this.ease, this.player);
+				this.queueEase('bounceX');
 			});
 		});
 		this.manager.ease('bounceX', this.beatRange[1], 1.5, 0.0, this.ease, this.player);

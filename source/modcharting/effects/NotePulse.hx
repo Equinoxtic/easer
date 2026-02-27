@@ -30,17 +30,18 @@ class NotePulse extends BasicEffect {
 		this.destroy();
 	}
 	
-	private function pulseDrunkTipsy():Void {
-		var val:Float = (this.value + 1.0) * TIPSYDRUNK_DAMPENING_MULT;
-		for (mod in ['Drunk', 'Tipsy']) {
-			this.manager.set(mod, this.beat, (!this.inverse) ? val : -val, this.player);
-			this.manager.ease(mod, this.beat, this.duration * TIPSYDRUNK_DURATION_MULT, 0.0, this.ease, this.player);
+	private function pulseLanes(lanes:Array<Int>, coordinate:String, ?add:Null<Float> = 0.0, ?mult:Null<Float> = 1.0):Void {
+		for (lane in lanes) {
+			final scaleKey = 'scale' + coordinate + Std.string(lane);
+			this.pulse(scaleKey, (this.value + add) * mult);
 		}
 	}
 	
-	private function pulseRotate():Void {
-		this.manager.set(rotateKey, this.beat, (this.inverse) ? -this.angle : this.angle, this.player);
-		this.manager.ease(rotateKey, this.beat, this.duration * ROTATION_DURATION_MULT, 0.0, this.ease, this.player);
+	private function pulseDrunkTipsy():Void {
+		var val:Float = this.invert((this.value + 1.0) * TIPSYDRUNK_DAMPENING_MULT);
+		for (mod in [ModIDs.DRUNK, ModIDs.TIPSY]) {
+			this.pulse(mod, val, TIPSYDRUNK_DURATION_MULT);
+		}
 	}
 	
 	private function pulseScale():Void {
@@ -57,11 +58,6 @@ class NotePulse extends BasicEffect {
 		}
 	}
 	
-	private function pulseLanes(lanes:Array<Int>, coordinate:String, ?add:Null<Float> = 0.0, ?mult:Null<Float> = 1.0):Void {
-		for (lane in lanes) {
-			final scaleKey = 'scale' + coordinate + Std.string(lane);
-			this.manager.set(scaleKey, this.beat, (this.value + add) * mult, this.player);
-			this.manager.ease(scaleKey, this.beat, this.duration, 0.0, this.ease, this.player);
-		}
-	}
+	private inline function pulseRotate():Void
+		this.pulse(rotateKey, this.invert(this.angle), ROTATION_DURATION_MULT);
 }

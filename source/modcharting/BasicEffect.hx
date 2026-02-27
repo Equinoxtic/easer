@@ -64,24 +64,22 @@ class BasicEffect {
 		}
 	}
 	
-	public function queueSet(name:String, ?value:Null<Float> = 1.0, ?multiplier:Null<Float> = 1.0):Void {
-		this.manager.set(name, this.beat, this.calculate(value, multiplier), this.player);
-	}
+	public inline function queueSet(name:String, ?value:Null<Float> = 1.0):Void
+		this.manager.set(name, this.beat, (value != null) ? value : this.invert(this.value), this.player);
 	
-	public function queueEase(name:String, ?value:Null<Float> = 1.0, ?multiplier:Null<Float> = 1.0, ?lifetime:Null<Float> = 1.0):Void {
-		this.manager.ease(name, this.beat, this.duration * ((lifetime != null) ? lifetime : 1.0), this.calculate(value, multiplier), this.ease, this.player);
-	}
+	public inline function queueEase(name:String, ?value:Null<Float> = 1.0, ?durationMultiplier:Null<Float> = 1.0):Void
+		this.manager.ease(name, this.beat, this.duration * ((durationMultiplier != null) ? durationMultiplier : 1.0), (value != null) ? value : this.invert(this.value), this.ease, this.player);
 	
 	public function pulse(name:String, ?value:Null<Float> = 1.0, ?lifetime:Null<Float> = 1.0):Void {
-		this.queueSet(name, value, 1.0);
-		this.queueEase(name, value, 0.0, lifetime);
+		this.queueSet(name, value);
+		this.queueEase(name, 0.0, lifetime);
 	}
 	
 	public inline function invert(value:Float):Float
 		return (this.inverse) ? -value : value;
 	
-	public inline function calculate(value:Float, ?multiplier:Null<Float> = 1.0):Float
-		return ((value != null) ? value : this.invert(this.value)) * ((multiplier != null) ? multiplier : 1.0);
+	public inline function flip(value:Float):Float
+		return (this.inverse) ? 0.0 : value;
 	
 	public function destroy():Void {
 		this.manager = null;
@@ -96,14 +94,12 @@ class BasicEffect {
 		Iterates through the range of beats of the effect.
 		@returns IntIterator
 	**/
-	private function iterateBeatRange():IntIterator {
+	private inline function iterateBeatRange():IntIterator
 		return (this.beatRange[0]...(this.beatRange[1] + 1));
-	}
 	
 	/**
 		Gets `n mod beat`.
 	**/
-	private function getModulo(beat:Int, ?mod:Null<Int> = 4):Int {
+	private inline function getModulo(beat:Int, ?mod:Null<Int> = 4):Int
 		return ((beat % mod) == 0);
-	}
 }

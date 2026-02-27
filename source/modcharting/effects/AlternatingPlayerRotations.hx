@@ -10,17 +10,15 @@ import modchart.Manager;
 class AlternatingPlayerRotations extends BasicEffect {
 	public function new(manager:Manager, params:Dynamic) {
 		super(manager, params);
-		setupReverse(this.beatRange[0]);
+		setupReverse();
 		this.onBeat((beat:Int) -> {
 			this.perModOfBeat(beat, null, (beat:Int) -> {
-				var value:Float = (!this.inverse) ? 180.0 : 0;
-				this.manager.ease('centerRotateX', beat, this.duration, value, this.ease);
+				this.queueEase('centerRotateX', this.flip(180.0));
 			});
 		});
 		this.destroy();
 	}
 	
-	private function setupReverse(beat:Int):Void {
-		this.manager.ease(ModIDs.REVERSE, beat, this.duration, 1.0, this.ease, (!this.inverse) ? Constants.OPPONENT_ID : Constants.PLAYER_ID);
-	}
+	private inline function setupReverse():Void
+		this.manager.set(ModIDs.REVERSE, this.beatRange[0], 1.0, Constants.OPPONENT_ID);
 }

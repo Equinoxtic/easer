@@ -37,8 +37,7 @@ class NoteDisplacement extends BasicEffect {
 	
 	public function tornadoPulse():Void {
 		if (!this.tornadoEnabled) return;
-		this.manager.set(ModIDs.TORNADO, this.beat, ((!this.inverse) ? this.TORNADO_VALUE : -this.TORNADO_VALUE) * this.value, this.player);
-		this.manager.ease(ModIDs.TORNADO, this.beat, this.duration, 0.0, this.ease, this.player);
+		this.pulse(ModIDs.TORNADO, this.invert(this.TORNADO_VALUE * this.value));
 	}
 	
 	public function spaceOut():Void {
@@ -52,11 +51,9 @@ class NoteDisplacement extends BasicEffect {
 	
 	private function easeOffset(?targetOffset:Null<String> = 'x', ?note:Null<Int> = 0, ?v:Null<Float> = 1.0):Void {
 		var targetNote:String = targetOffset + Std.string(note);
-		this.manager.set(targetNote, this.beat, this.calculateValue((!this.trueInverse) ? v : -v), this.player);
-		this.manager.ease(targetNote, this.beat, this.duration, 0.0, this.ease, this.player);
+		this.pulse(targetNote, this.calculateValue((!this.trueInverse) ? v : -v));
 	}
 	
-	private function calculateValue(?v:Null<Float> = 1.0):Float {
+	private inline function calculateValue(?v:Null<Float> = 1.0):Float
 		return v * this.OFFSET * this.value;
-	}
 }
