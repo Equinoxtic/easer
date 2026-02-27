@@ -48,7 +48,6 @@ class ModchartLib {
 		return parametersList;
 	}
 	
-	private static function evalAlpha(modName:String):Float {
+	private static inline function evalAlpha(modName:String):Float
 		return (modName == ModIDs.ALPHA) ? 1.0 : 0.0;
-	}
 }

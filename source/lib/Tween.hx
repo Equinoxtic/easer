@@ -28,11 +28,14 @@ class Tween {
 	}
 	
 	public function forceCancel():Void {
-		if (this.localized != null)
-			this.localized.cancel();
+		if (this.localized == null)
+			return;
+		this.localized.cancel();
 	}
 	
 	public function setState(state:Bool):Void {
+		if (this.localized == null)
+			return;
 		this.localized.active = state;
 	}
 	
