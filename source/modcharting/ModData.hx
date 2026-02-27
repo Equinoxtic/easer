@@ -9,7 +9,7 @@ class ModData {
 	public var ease:Float->Float = FlxEase.expoOut;
 	public var player:Int = -1;
 	/**
-		Create a dataset for a modifier. (Does not include `beats` as a parameter since this is meant to be used for the `easeModifiersAtBeat()` method.)
+		Create a dataset for a modifier. (Does not include `beats` as a parameter since this is meant to be used for the `easeModsOnBeat()` method.)
 		@param name The name of the modifier
 		@param data The data for the given modifier; its tween duration, value, tween easing, and the target field/player
 	**/
