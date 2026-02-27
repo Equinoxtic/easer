@@ -64,6 +64,25 @@ class BasicEffect {
 		}
 	}
 	
+	public function queueSet(name:String, ?value:Null<Float> = 1.0, ?multiplier:Null<Float> = 1.0):Void {
+		this.manager.set(name, this.beat, this.calculate(value, multiplier), this.player);
+	}
+	
+	public function queueEase(name:String, ?value:Null<Float> = 1.0, ?multiplier:Null<Float> = 1.0):Void {
+		this.manager.ease(name, this.beat, this.duration, this.calculate(value, multiplier), this.ease, this.player);
+	}
+	
+	public function pulse(name:String, ?value:Null<Float> = 1.0):Void {
+		this.queueSet(name, value, 1.0);
+		this.queueEase(name, value, 0.0);
+	}
+	
+	public inline function invert(value:Float):Float
+		return (this.inverse) ? -value : value;
+	
+	public inline function calculate(value:Float, ?multiplier:Null<Float> = 1.0):Float
+		return ((value != null) ? value : this.invert(this.value)) * ((multiplier != null) ? multiplier : 1.0);
+	
 	public function destroy():Void {
 		this.manager = null;
 		if (this.parameters != null)
