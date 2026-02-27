@@ -1,5 +1,7 @@
 package modcharting;
 
+import flixel.tweens.FlxEase;
+
 class ModData {	
 	public var name:String = "";
 	public var length:Float = 1.0;
@@ -9,16 +11,17 @@ class ModData {
 	/**
 		Create a dataset for a modifier. (Does not include `beats` as a parameter since this is meant to be used for the `easeModifiersAtBeat()` method.)
 		@param name The name of the modifier
-		@param length The length/duration of the modifier's tween
-		@param value The value of the modifier
-		@param ease The ease of the modifier's tween
-		@param player The field/player tobe used for the modifier
+		@param data The data for the given modifier; its tween duration, value, tween easing, and the target field/player
 	**/
-	public function new(name:String, length:Float, value:Float, ease:Float->Float, ?player:Null<Int> = -1) {
+	public function new(name:String, ?data:Null<{length:Float, value:Float, ease:Float->Float, player:Int}>) {
+		this.initialize(name, data.length, data.value, data.ease, data.player);
+	}
+	
+	public function initialize(name:String, ?length:Null<Float> = 1.0, ?value:Null<Float> = 0.0, ?ease:Null<Float->Float> = FlxEase.expoOut, player:Null<Int> = -1):Void {
 		this.name = name;
-		this.length = length;
-		this.value = value;
-		this.ease = ease;
-		this.player = player;
+		this.length = (length != null) ? length : this.length;
+		this.value = (value != null) ? value : this.value;
+		this.ease = (ease != null) ? ease : this.ease;
+		this.player = (player != null) ? player : this.player;
 	}
 }
