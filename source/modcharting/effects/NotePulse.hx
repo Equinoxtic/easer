@@ -46,10 +46,15 @@ class NotePulse extends BasicEffect {
 	private function pulseScale():Void {
 		var indexA:Int = ((!this.inverse) ? 1 : 0);
 		var indexB:Int = ((this.inverse) ? 1 : 0);
-		this.pulseLanes(TARGET_STRUMLANES[indexA], 'X');
-		this.pulseLanes(TARGET_STRUMLANES[indexA], 'Y', 0.0, 0.4);
-		this.pulseLanes(TARGET_STRUMLANES[indexB], 'X', 0.0, -0.2);
-		this.pulseLanes(TARGET_STRUMLANES[indexB], 'Y', 0.0, -0.4);
+		final PULSE_DATA:Array<{lane:Int, coordinate:String, add:Float, mult:Float}> = [
+			{ lane: TARGET_STRUMLANES[indexA], coordinate: "X", add: 0.0, mult: 0.0 },
+			{ lane: TARGET_STRUMLANES[indexA], coordinate: "Y", add: 0.0, mult: 0.4 },
+			{ lane: TARGET_STRUMLANES[indexB], coordinate: "X", add: 0.0, mult: -0.2 },
+			{ lane: TARGET_STRUMLANES[indexB], coordinate: "Y", add: 0.0, mult: -0.4 }
+		];
+		for (data in PULSE_DATA) {
+			this.pulseLanes(data.lane, data.coordinate, data.add, data.mult);
+		}
 	}
 	
 	private function pulseLanes(lanes:Array<Int>, coordinate:String, ?add:Null<Float> = 0.0, ?mult:Null<Float> = 1.0):Void {
