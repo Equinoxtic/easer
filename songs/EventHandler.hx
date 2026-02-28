@@ -81,16 +81,16 @@ function update(elapsed:Float):Void {
 }
 
 function postUpdate(elapsed:Float):Void {
-	if (endingSong) clearMem();
+	// if (endingSong) clearMem();
 }
 
 function onNoteHit(e:NoteHitEvent):Void {
 	shakeCamFor(e.character);
 }
 
-function onStateSwitch(e:StateEvent):Void {
+/*function onStateSwitch(e:StateEvent):Void {
 	clearMem();
-}
+}*/
 
 function onGameOver():Void {
 	clearMem();
