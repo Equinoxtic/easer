@@ -9,6 +9,7 @@ class TweenedOutwardLensCircle extends FlxSprite {
 		this.alpha = initialAlpha;
 		this.scale.set(initialSize.width, initialSize.height);
 		this.screenCenter();
+		this.scrollFactor.set(0, 0);
 	}
 	
 	private inline function tween(alpha:Float, width:Float, height:Float, duration:Float, ease:String, tweenType:String):Tween

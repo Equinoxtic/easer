@@ -13,6 +13,7 @@ var bokehShader:CustomShader;
 var windowSizeTween:Tween;
 var lensDistortionTween:Tween;
 var lensCircleBlackTween:Tween;
+var filmBorderTween:Tween;
 var bokehTween:Tween;
 
 var windowHandler:WindowHandler;
@@ -40,8 +41,16 @@ final TARGET_CAMERAS:Map<String, FlxCamera> = [
 var lensCircle:TweenedOutwardLensCircle;
 var lensCircleBlack:FlxSprite;
 
+var filmBorderGrp:FlxSpriteGroup;
+
 var spriteCache:Array<FlxSprite> = [];
 var tweenCache:Array<Tween> = [];
+
+var savedFilmBorderHeight:Float = 0.0;
+
+final DEFAULT_FILM_BORDER_HEIGHT:Float = 0.0;
+
+var camOther:FlxCamera;
 
 function create():Void {
 	windowHandler = new WindowHandler();
@@ -74,6 +83,14 @@ function create():Void {
 	
 	spriteCache.push(lensCircle);
 	spriteCache.push(lensCircleBlack);
+}
+
+function onStrumCreation(event:StrumCreationEvent):Void {
+	filmBorderGrp = new FlxSpriteGroup();
+	filmBorderGrp.add(drawFilmBorder(0, DEFAULT_FILM_BORDER_HEIGHT, -180, 1));
+	filmBorderGrp.add(drawFilmBorder(FlxG.height, DEFAULT_FILM_BORDER_HEIGHT, 180, -1));
+	filmBorderGrp.cameras = [camHUD];
+	add(filmBorderGrp);
 }
 
 function update(elapsed:Float):Void {
@@ -216,6 +233,31 @@ function onEvent(event):Void {
 				duration: parameters.duration,
 				active: parameters.enabled
 			});
+		case 'Film Border':
+			var parameters = {
+				isTweened:				curEvent.params[0],
+				height:					curEvent.params[1],
+				duration:				curEvent.params[2],
+				ease:					curEvent.params[3],
+				tweenType:				curEvent.params[4],
+				pulsates:				curEvent.params[5],
+				relativePulsate:		curEvent.params[6]
+			};
+			filmBorderGrp.forEachAlive((spr:FlxSprite) -> {
+				savedFilmBorderHeight = spr.scale.y;
+				if (parameters.isTweened) {
+					var heightTweenValue:Float = parameters.height * 0.85;
+					if (parameters.pulsates) {
+						spr.scale.set(spr.scale.x, (parameters.relativePulsate) ? savedFilmBorderHeight + parameters.height : parameters.height);
+						heightTweenValue = (parameters.relativePulsate) ? savedFilmBorderHeight : parameters.height;
+					}
+					filmBorderTween = new Tween(spr.scale, {y: heightTweenValue}, parameters.duration, parameters.ease, parameters.tweenType).play();
+					tweenCache.push(filmBorderTween);
+				} else {
+					filmBorderTween.cancel();
+					spr.scale.set(spr.scale.x, parameters.height);
+				}
+			});
 	}
 }
 
@@ -260,6 +302,17 @@ function resetLensDistortion(removeShader:Bool = false):Void {
 	lensDistortionShader.intensity = 0;
 	lensDistortionShader.offset = 0;
 	lensDistortionShader.area = 0;
+}
+
+function drawFilmBorder(y:Float, height:Float, angle:Float, yOrigin:Float):FlxSprite {
+	var borderSpr:FlxSprite = new FlxSprite(0, y);
+	borderSpr.color = 0xFF000000;
+	borderSpr.scale.set(FlxG.width * 5, height);
+	borderSpr.angle = angle;
+	borderSpr.screenCenter(FlxAxes.X);
+	borderSpr.origin.set(0.5, yOrigin);
+	spriteCache.push(borderSpr);
+	return borderSpr;
 }
 
 function clearMem():Void {
