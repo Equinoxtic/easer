@@ -15,6 +15,7 @@ class RandomizedNoteGrow extends BasicEffect {
 	public function new(manager:Manager, params:Dynamic) {
 		super(manager, params);
 		var laneSet:Array<Int> = this.POSSIBLE_LANE_COMBINATIONS[FlxG.random.int(0, this.POSSIBLE_LANE_COMBINATIONS.length - 1)];
+		this.manager.set('scale', params.startingScaleBeat, 0.0);
 		this.onIBeats((beat:Float, interval:Float) -> {
 			var lane = laneSet[position];
 			switch(beat) {
