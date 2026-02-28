@@ -192,7 +192,7 @@ function onEvent(event):Void {
 				tweenType:				curEvent.params[5]
 			};
 			lensCircle.visible = true;
-			lensCircleBlack.visible = true
+			lensCircleBlack.visible = true;
 			lensCircle.tween(parameters.alpha, parameters.width, parameters.height, parameters.duration, parameters.ease, parameters.tweenType);
 			lensCircleBlackTween = new Tween(lensCircleBlack, {alpha: parameters.alpha}, parameters.duration * 0.5, parameters.ease, parameters.tweenType).play();
 			tweenCache.push(lensCircleBlackTween);
