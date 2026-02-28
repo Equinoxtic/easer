@@ -10,7 +10,8 @@ class BasicEffect {
 	
 	public var parameters:Dynamic;
 	
-	public var beatRange:Array<Int> = [0, 0];
+	public var beatRange:Array<Int> = [ 0, 0 ];
+	public var iBeatRange:{min:Float, max:Float, interval:Float} = {min: 0.0, max: 0.0, interval: 0.0};
 	public var modulus:Int = 4;
 	public var duration:Float = 1.0;
 	public var value:Float = 0.0;
@@ -18,7 +19,7 @@ class BasicEffect {
 	public var inverse:Bool = false;
 	public var player:Int = -1;
 	
-	public var beat:Int = 0;
+	public var beat:Float = 0;
 	
 	private var callbacks:Array<Dynamic> = [];
 	
@@ -32,6 +33,7 @@ class BasicEffect {
 		this.manager = manager;
 		this.parameters = params;
 		this.beatRange = params.beatRange;
+		this.iBeatRange = params.iBeatRange;
 		this.modulus = params.modulus;
 		this.duration = params.length;
 		this.value = params.value;
@@ -46,7 +48,22 @@ class BasicEffect {
 	public function onBeat(func:(beat:Int)->Void):Void {
 		if (func == null) return;
 		for (beat in this.iterateBeatRange()) {
-			callbacks.push(func(beat));
+			func(beat);
+		}
+	}
+	
+	/**
+		Fires multiple callbacks within a beat range of floats with intervals.
+		- This does not and SHOULD NOT make use of a modulo, as modulos in programming cannot discern if the output is a decimal or not.
+		- This is used for much more controlled scenarios for faster beats.
+	**/
+	public function onIBeats(func:(beat:Float, interval:Float)->Void):Void {
+		if (func == null) return;
+		var beat:Float = this.iBeatRange.min;
+		while (beat <= this.iBeatRange.max) {
+			this.beat = beat;
+			func(this.beat, this.iBeatRange.interval);
+			beat += this.iBeatRange.interval;
 		}
 	}
 	
@@ -59,7 +76,7 @@ class BasicEffect {
 	public function perModOfBeat(beat:Int, mod:Int = 4, func:(beat:Int)->Void):Void {
 		if (this.getModulo(beat, (mod != null && mod > 0) ? mod : this.modulus)) {
 			this.beat = beat;
-			callbacks.push(func(this.beat));
+			func(Math.floor(this.beat));
 			this.inverse = !this.inverse;
 		}
 	}
@@ -67,8 +84,8 @@ class BasicEffect {
 	public inline function queueSet(name:String, value:Float = 1.0):Void
 		this.manager.set(name, this.beat, (value != null) ? value : this.invert(this.value), this.player);
 	
-	public inline function queueEase(name:String, value:Float = 1.0, durationMultiplier:Float = 1.0):Void
-		this.manager.ease(name, this.beat, this.duration * ((durationMultiplier != null) ? durationMultiplier : 1.0), (value != null) ? value : this.invert(this.value), this.ease, this.player);
+	public inline function queueEase(name:String, value:Float = 1.0, lifetime:Float = 1.0):Void
+		this.manager.ease(name, this.beat, this.calculateDuration(this.duration, lifetime), (value != null) ? value : this.invert(this.value), this.ease, this.player);
 	
 	public function pulse(name:String, value:Float = 1.0, lifetime:Float = 1.0):Void {
 		this.queueSet(name, value);
@@ -81,12 +98,15 @@ class BasicEffect {
 	public inline function flip(value:Float):Float
 		return (this.inverse) ? 0.0 : value;
 	
+	public inline function calculateDuration(duration:Float, multiplier:Float):Float
+		return (duration * ((multiplier != null) ? multiplier : 1));
+	
 	public function destroy():Void {
 		this.manager = null;
 		if (this.parameters != null)
 			this.parameters = null;
-		for (f in callbacks)
-			f = null;
+		// for (f in callbacks)
+		// 	f = null;
 		this = null;
 	}
 	
