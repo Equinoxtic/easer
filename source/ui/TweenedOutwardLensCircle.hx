@@ -1,0 +1,16 @@
+package ui;
+
+import lib.Tween;
+
+class TweenedOutwardLensCircle extends FlxSprite {
+	public function new(initialAlpha:Float, initialSize:{width:Float, height:Float}) {
+		super(0, 0, Paths.image("BlackCircle"));
+		this.antialiasing = true;
+		this.alpha = initialAlpha;
+		this.scale.set(initialSize.width, initialSize.height);
+		this.screenCenter();
+	}
+	
+	private inline function tween(alpha:Float, width:Float, height:Float, duration:Float, ease:String, tweenType:String):Tween
+		return new Tween(this, {alpha: alpha, "scale.x": width, "scale.y": height}, duration, ease, tweenType).play();
+}
