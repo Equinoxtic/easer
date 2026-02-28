@@ -35,8 +35,12 @@ final TARGET_CAMERAS:Map<String, FlxCamera> = [
 	'camHUD'	=> camHUD
 ];
 
+var spriteCache:Array<FlxSprite> = [];
+var tweenCache:Array<Tween> = [];
+
 function create():Void {
 	windowHandler = new WindowHandler();
+	windowHandler.reset();
 	if (shadersEnabled) {
 		invertShader = new CustomShader('invertColor');
 		invertShader.intensity = 1.0;
@@ -54,7 +58,21 @@ function update(elapsed:Float):Void {
 	windowHandler.update();
 }
 
-function onNoteHit(e:NoteHitEvent):Void { shakeCamFor(e.character); }
+function postUpdate(elapsed:Float):Void {
+	if (endingSong) clearMem();
+}
+
+function onNoteHit(e:NoteHitEvent):Void {
+	shakeCamFor(e.character);
+}
+
+function onStateSwitch(e:StateEvent):Void {
+	clearMem();
+}
+
+function onGameOver():Void {
+	clearMem();
+}
 
 function onEvent(event):Void {
 	var curEvent = event.event;
@@ -196,6 +214,7 @@ function tweenLensDistortion(intensity:Float = 0.01, area:Float = -0.1, offset:F
 		area: area,
 		offset: offset
 	}, duration, ease, tweenType).play();
+	tweenCache.push(lensDistortionTween);
 }
 
 function resetLensDistortion(removeShader:Bool = false):Void {
@@ -203,4 +222,19 @@ function resetLensDistortion(removeShader:Bool = false):Void {
 	lensDistortionShader.intensity = 0;
 	lensDistortionShader.offset = 0;
 	lensDistortionShader.area = 0;
+}
+
+function clearMem():Void {
+	shakeMap.clear();
+	shakeMap = [];
+	for (sprite in spriteCache) {
+		if (sprite == null)
+			continue;
+		sprite.destroy();
+	}
+	for (tween in tweenCache) {
+		if (tween == null)
+			continue;
+		tween.destroy();
+	}
 }
