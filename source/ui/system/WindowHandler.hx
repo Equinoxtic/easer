@@ -26,8 +26,13 @@ class WindowHandler {
 	}
 	
 	public function update():Void {
-		if (!this.active) return;
-		sineWave(this.waveAmplitude, this.waveFrequency);
+		if (PlayState.instance.endingSong) {
+			this.destroy();
+		} else {
+			if (!this.active)
+				return;
+			sineWave(this.waveAmplitude, this.waveFrequency);
+		}
 	}
 	
 	public function reset():Void {
@@ -39,21 +44,17 @@ class WindowHandler {
 		this.resize(Constants.DEFAULT_WINDOW_WIDTH, Constants.DEFAULT_WINDOW_HEIGHT);
 	}
 	
-	public function position(x:Int, y:Int):Void {
+	public inline function position(x:Int, y:Int):Void
 		this.windowInstance.move(x, y);
-	}
 	
-	public function resize(width:Int, height:Int):Void {
+	public inline function resize(width:Int, height:Int):Void
 		this.windowInstance.resize(width, height);
-	}
 	
-	public function tweenedPosition(x:Int, y:Int, duration:Float, ease:String, tweenType:String):Void {
+	public inline function tweenedPosition(x:Int, y:Int, duration:Float, ease:String, tweenType:String):Void
 		this.posTween = new Tween(this.windowInstance, {x: x, y: y}, duration, ease, tweenType).play();
-	}
 	
-	public function tweenedResize(width:Int, height:Int, duration:Float, ease:String, tweenType:String):Void {
+	public inline function tweenedResize(width:Int, height:Int, duration:Float, ease:String, tweenType:String):Void
 		this.sizeTween = new Tween(this.windowInstance, {width: width, height: height}, duration, ease, tweenType).play();
-	}
 	
 	public function sineWave(amplitude:Float, frequency:Float):Void {
 		if (!this.sineWaveEnabled) return;
@@ -62,9 +63,8 @@ class WindowHandler {
 		this.position(newX, newY);
 	}
 	
-	public function setSineWaveState(state:Bool):Void {
+	public inline function setSineWaveState(state:Bool):Void
 		this.sineWaveEnabled = state;
-	}
 	
 	public function setSineWaveProperties(newAmplitude:Float, newFrequency:Float, dampeningX:Float, dampeningY:Float):Void {
 		this.waveAmplitude = newAmplitude;
@@ -73,20 +73,19 @@ class WindowHandler {
 		this.waveDampeningY = dampeningY;
 	}
 	
-	public function focus():Void {
+	public inline function focus():Void
 		this.windowInstance.focus();
-	}
+	
+	public inline function setBorderless(isBorderless:Bool):Void
+		this.windowInstance.borderless = isBorderless;
 	
 	public function setFullscreen(isFullscreen:Bool):Void {
 		if (!this.windowInstance.borderless) {
 			this.windowInstance.fullscreen = isFullscreen;
 		} else {
-			if (isFullscreen) this.resize(1920, 1080);
+			if (isFullscreen)
+				this.resize(1920, 1080);
 		}
-	}
-	
-	public function setBorderless(isBorderless:Bool):Void {
-		this.windowInstance.borderless = isBorderless;
 	}
 	
 	public function destroy():Void {
