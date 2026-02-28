@@ -11,6 +11,7 @@ var bokehShader:CustomShader;
 
 var windowSizeTween:Tween;
 var lensDistortionTween:Tween;
+var bokehTween:Tween;
 
 var windowHandler:WindowHandler;
 
@@ -67,6 +68,15 @@ function onEvent(event):Void {
 			} else {
 				camGame.removeShader(invertShader);
 			}
+		case 'Tween Bokeh':
+			var parameters:Dynamic = {
+				intensity:				curEvent.params[0],
+				radius:					curEvent.params[1],
+				duration:				curEvent.params[2],
+				ease:					curEvent.params[3],
+				tweenType:				curEvent.params[4]
+			};
+			bokehTween = new Tween(bokehShader, {radius: parameters.radius, amount: parameters.intensity}, parameters.duration, parameters.ease, parameters.tweenType).play();
 		case 'Tween Lens Distortion':
 			var parameters:Dynamic = {
 				intensity:				curEvent.params[0],
