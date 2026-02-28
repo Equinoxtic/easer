@@ -43,7 +43,7 @@ class BasicEffect {
 	/**
 		Fires multiple callbacks within the beat range.
 	**/
-	public function onBeat(?func:Null<(beat:Int)->Void>):Void {
+	public function onBeat(func:(beat:Int)->Void):Void {
 		if (func == null) return;
 		for (beat in this.iterateBeatRange()) {
 			callbacks.push(func(beat));
@@ -56,7 +56,7 @@ class BasicEffect {
 		@param mod The *modulus* of the beat [Default: 4]
 		@param func The callback to be fired
 	**/
-	public function perModOfBeat(beat:Int, ?mod:Null<Int> = 4, ?func:Null<(beat:Int)->Void>):Void {
+	public function perModOfBeat(beat:Int, mod:Int = 4, func:(beat:Int)->Void):Void {
 		if (this.getModulo(beat, (mod != null && mod > 0) ? mod : this.modulus)) {
 			this.beat = beat;
 			callbacks.push(func(this.beat));
@@ -64,13 +64,13 @@ class BasicEffect {
 		}
 	}
 	
-	public inline function queueSet(name:String, ?value:Null<Float> = 1.0):Void
+	public inline function queueSet(name:String, value:Float = 1.0):Void
 		this.manager.set(name, this.beat, (value != null) ? value : this.invert(this.value), this.player);
 	
-	public inline function queueEase(name:String, ?value:Null<Float> = 1.0, ?durationMultiplier:Null<Float> = 1.0):Void
+	public inline function queueEase(name:String, value:Float = 1.0, durationMultiplier:Float = 1.0):Void
 		this.manager.ease(name, this.beat, this.duration * ((durationMultiplier != null) ? durationMultiplier : 1.0), (value != null) ? value : this.invert(this.value), this.ease, this.player);
 	
-	public function pulse(name:String, ?value:Null<Float> = 1.0, ?lifetime:Null<Float> = 1.0):Void {
+	public function pulse(name:String, value:Float = 1.0, lifetime:Float = 1.0):Void {
 		this.queueSet(name, value);
 		this.queueEase(name, 0.0, lifetime);
 	}
@@ -100,6 +100,6 @@ class BasicEffect {
 	/**
 		Gets `n mod beat`.
 	**/
-	private inline function getModulo(beat:Int, ?mod:Null<Int> = 4):Int
+	private inline function getModulo(beat:Int, mod:Int = 4):Int
 		return ((beat % mod) == 0);
 }

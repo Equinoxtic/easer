@@ -13,11 +13,11 @@ class ModData {
 		@param name The name of the modifier
 		@param data The data for the given modifier; its tween duration, value, tween easing, and the target field/player
 	**/
-	public function new(name:String, ?data:Null<{length:Float, value:Float, ease:Float->Float, player:Int}>) {
+	public function new(name:String, data:{length:Float, value:Float, ease:Float->Float, player:Int}) {
 		this.initialize(name, data.length, data.value, data.ease, data.player);
 	}
 	
-	public function initialize(name:String, ?length:Null<Float> = 1.0, ?value:Null<Float> = 0.0, ?ease:Null<Float->Float> = FlxEase.expoOut, player:Null<Int> = -1):Void {
+	public function initialize(name:String, length:Float = 1.0, value:Float = 0.0, ease:Float->Float = FlxEase.expoOut, player:Int = -1):Void {
 		this.name = name;
 		this.length = (length != null) ? length : this.length;
 		this.value = (value != null) ? value : this.value;

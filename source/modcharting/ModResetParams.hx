@@ -14,7 +14,7 @@ class ModResetParams {
 		@param ease The ease of the modifier's tween
 		@param player The field/player that is affected by the reset
 	**/
-	public function new(modifiers:Array<String>, beat:Int, length:Float, ease:Float->Float, ?player:Null<Int> = -1) {
+	public function new(modifiers:Array<String>, beat:Int, length:Float, ease:Float->Float, player:Int = -1) {
 		this.modifiers = modifiers;
 		this.beat = beat;
 		this.length = length;

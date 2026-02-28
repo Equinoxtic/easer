@@ -35,11 +35,6 @@ class NoteDisplacement extends BasicEffect {
 		this.destroy();
 	}
 	
-	public function tornadoPulse():Void {
-		if (!this.tornadoEnabled) return;
-		this.pulse(ModIDs.TORNADO, this.invert(this.TORNADO_VALUE * this.value));
-	}
-	
 	public function spaceOut():Void {
 		for (note => values in this.STRUM_DATA) {
 			if (!this.alternate)
@@ -49,11 +44,12 @@ class NoteDisplacement extends BasicEffect {
 		}
 	}
 	
-	private function easeOffset(?targetOffset:Null<String> = 'x', ?note:Null<Int> = 0, ?v:Null<Float> = 1.0):Void {
-		var targetNote:String = targetOffset + Std.string(note);
-		this.pulse(targetNote, this.calculateValue((!this.trueInverse) ? v : -v));
-	}
+	public inline function tornadoPulse():Void
+		if (this.tornadoEnabled) this.pulse(ModIDs.TORNADO, this.invert(this.TORNADO_VALUE * this.value));
 	
-	private inline function calculateValue(?v:Null<Float> = 1.0):Float
+	private inline function easeOffset(targetOffset:String, note:Int, v:Float):Void
+		this.pulse(targetOffset + Std.string(note), this.calculateValue((!this.trueInverse) ? v : -v));
+	
+	private inline function calculateValue(v:Float):Float
 		return v * this.OFFSET * this.value;
 }

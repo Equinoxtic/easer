@@ -30,7 +30,7 @@ class NotePulse extends BasicEffect {
 		this.destroy();
 	}
 	
-	private function pulseLanes(lanes:Array<Int>, coordinate:String, ?add:Null<Float> = 0.0, ?mult:Null<Float> = 1.0):Void {
+	private function pulseLanes(lanes:Array<Int>, coordinate:String, add:Float, mult:Float):Void {
 		for (lane in lanes) {
 			final scaleKey = 'scale' + coordinate + Std.string(lane);
 			this.pulse(scaleKey, (this.value + add) * mult);

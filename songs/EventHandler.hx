@@ -180,7 +180,7 @@ function shakeCamFor(character:Character):Void {
 	TARGET_CAMERAS.get(data.camera).shake(data.intensity, data.duration);
 }
 
-function setLensDistortion(?intensity:Null<Float> = 0.01, ?area:Null<Float> = -0.1, ?offset:Null<Float> = 0.025, ?multiplier:Null<Float> = 1.0):Void {
+function setLensDistortion(intensity:Float = 0.01, area:Float = -0.1, offset:Float = 0.025, multiplier:Float = 1.0):Void {
 	if (!shadersEnabled) return;
 	if (lensDistortionTween != null)
 		lensDistortionTween.forceCancel();
@@ -189,7 +189,7 @@ function setLensDistortion(?intensity:Null<Float> = 0.01, ?area:Null<Float> = -0
 	lensDistortionShader.offset = offset * multiplier;
 }
 
-function tweenLensDistortion(?intensity:Null<Float> = 0.01, ?area:Null<Float> = -0.1, ?offset:Null<Float> = 0.025, ?duration:Null<Float> = 1.0, ?ease:Null<String> = 'linear', ?tweenType:Null<String> = 'In'):Void {
+function tweenLensDistortion(intensity:Float = 0.01, area:Float = -0.1, offset:Float = 0.025, duration:Float = 1.0, ease:String = 'linear', tweenType:String = 'In'):Void {
 	if (!shadersEnabled) return;
 	lensDistortionTween = new Tween(lensDistortionShader, {
 		intensity: intensity,

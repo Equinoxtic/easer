@@ -10,7 +10,7 @@ class Tween {
 	public var ease:String = 'linear';
 	public var tweenType:String = 'Out';
 	
-	public function new(object:Dynamic, values:Dynamic, duration:Dynamic, ease:String, tweenType:String, ?startDelay:Null<Float> = 1.0) {
+	public function new(object:Dynamic, values:Dynamic, duration:Dynamic, ease:String, tweenType:String, startDelay:Float = 1.0) {
 		if (object == null || values == null)
 			return;
 		this.object = object;
@@ -27,17 +27,11 @@ class Tween {
 		return this;
 	}
 	
-	public function forceCancel():Void {
-		if (this.localized == null)
-			return;
-		this.localized.cancel();
-	}
+	public inline function forceCancel():Void
+		if (this.localized != null) this.localized.cancel();
 	
-	public function setState(state:Bool):Void {
-		if (this.localized == null)
-			return;
-		this.localized.active = state;
-	}
+	public inline function setState(state:Bool):Void
+		if (this.localized != null) this.localized.active = state;
 	
 	public function destroy():Void {
 		if (this.localized != null)
@@ -45,9 +39,6 @@ class Tween {
 		this = null;
 	}
 	
-	private function make():FlxTween {
-		var twn:FlxTween = FlxTween.tween(this.object, this.values, (Conductor.stepCrochet / 1000) * this.duration, { ease: CoolUtil.flxeaseFromString(ease, tweenType), startDelay: this.startDelay, onComplete: (_) -> this.localized = null});
-		// this.manager.push(twn);
-		return twn;
-	}
+	private inline function make():FlxTween
+		return FlxTween.tween(this.object, this.values, (Conductor.stepCrochet / 1000) * this.duration, { ease: CoolUtil.flxeaseFromString(ease, tweenType), startDelay: this.startDelay, onComplete: (_) -> this.localized = null});
 }
