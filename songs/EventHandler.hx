@@ -49,11 +49,6 @@ function update(elapsed:Float):Void {
 	windowHandler.update();
 }
 
-function postUpdate(elapsed:Float):Void {
-	if (endingSong)
-		windowHandler.destroy();
-}
-
 function onNoteHit(e:NoteHitEvent):Void { shakeCamFor(e.character); }
 
 function onEvent(event):Void {
