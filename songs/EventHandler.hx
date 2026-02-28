@@ -3,6 +3,7 @@ package;
 import lib.Tween;
 import flixel.text.FlxTextAlign;
 import ui.GhostTappingStateText;
+import ui.TweenedOutwardLensCircle;
 import ui.system.WindowHandler;
 
 var invertShader:CustomShader;
@@ -11,6 +12,7 @@ var bokehShader:CustomShader;
 
 var windowSizeTween:Tween;
 var lensDistortionTween:Tween;
+var lensCircleBlackTween:Tween;
 var bokehTween:Tween;
 
 var windowHandler:WindowHandler;
@@ -35,12 +37,16 @@ final TARGET_CAMERAS:Map<String, FlxCamera> = [
 	'camHUD'	=> camHUD
 ];
 
+var lensCircle:TweenedOutwardLensCircle;
+var lensCircleBlack:FlxSprite;
+
 var spriteCache:Array<FlxSprite> = [];
 var tweenCache:Array<Tween> = [];
 
 function create():Void {
 	windowHandler = new WindowHandler();
 	windowHandler.reset();
+	
 	if (shadersEnabled) {
 		invertShader = new CustomShader('invertColor');
 		invertShader.intensity = 1.0;
@@ -52,6 +58,22 @@ function create():Void {
 		addShadersToCameras([camGame, camHUD], [lensDistortionShader]);
 		addShadersToCameras([camGame], [bokehShader]);
 	}
+	
+	lensCircleBlack = new FlxSprite(0, 0);
+	lensCircleBlack.cameras = [camHUD];
+	lensCircleBlack.color = 0xFF000000;
+	lensCircleBlack.alpha = 0.0;
+	lensCircleBlack.scale.set(FlxG.width * 2.0, FlxG.height * 2.0);
+	lensCircleBlack.visible = false;
+	add(lensCircleBlack);
+	
+	lensCircle = new TweenedOutwardLensCircle(1.0, {width: 0.0, height: 0.0});
+	lensCircle.cameras = [camHUD];
+	lensCircle.visible = false;
+	add(lensCircle);
+	
+	spriteCache.push(lensCircle);
+	spriteCache.push(lensCircleBlack);
 }
 
 function update(elapsed:Float):Void {
@@ -155,9 +177,25 @@ function onEvent(event):Void {
 				xDampening:				curEvent.params[2],
 				yDampening:				curEvent.params[3]
 			};
+			windowHandler.active = true;
 			windowHandler.setSineWaveProperties(parameters.amplitude, parameters.frequency, parameters.xDampening, parameters.yDampening);
 			windowHandler.setSineWaveState(true);
-			windowHandler.active = true;
+		case 'Toggle Borderless':
+			windowHandler.setBorderless(curEvent.params[0]);
+		case 'Tween Outward Lens Circle':
+			var parameters:Dynamic = {
+				width:					curEvent.params[0],
+				height:					curEvent.params[1],
+				alpha:					curEvent.params[2],
+				duration:				curEvent.params[3],
+				ease:					curEvent.params[4],
+				tweenType:				curEvent.params[5]
+			};
+			lensCircle.visible = true;
+			lensCircleBlack.visible = true
+			lensCircle.tween(parameters.alpha, parameters.width, parameters.height, parameters.duration, parameters.ease, parameters.tweenType);
+			lensCircleBlackTween = new Tween(lensCircleBlack, {alpha: parameters.alpha}, parameters.duration * 0.5, parameters.ease, parameters.tweenType).play();
+			tweenCache.push(lensCircleBlackTween);
 		case 'Toggle Ghost Tapping':
 			ghostTapping = !curEvent.params[0];
 			var text:FunkinText = new GhostTappingStateText();
