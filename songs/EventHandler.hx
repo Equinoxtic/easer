@@ -7,6 +7,7 @@ import ui.system.WindowHandler;
 
 var invertShader:CustomShader;
 var lensDistortionShader:CustomShader;
+var bokehShader:CustomShader;
 
 var windowSizeTween:Tween;
 var lensDistortionTween:Tween;
@@ -39,9 +40,12 @@ function create():Void {
 		invertShader = new CustomShader('invertColor');
 		invertShader.intensity = 1.0;
 		lensDistortionShader = new CustomShader('lensDistortion');
+		bokehShader = new CustomShader('bokeh');
+		bokehShader.radius = 0.0;
+		bokehShader.amount = 0.0;
 		resetLensDistortion(false);
-		camGame.addShader(lensDistortionShader);
-		camHUD.addShader(lensDistortionShader);
+		addShadersToCameras([camGame, camHUD], [lensDistortionShader]);
+		addShadersToCameras([camGame], [bokehShader]);
 	}
 }
 
@@ -149,6 +153,14 @@ function onEvent(event):Void {
 	}
 }
 
+function addShadersToCameras(cameraList:Array<FlxCamera>, shaderList:Array<CustomShader>):Void {
+	for (camera in cameraList) {
+		for (shader in shaderList) {
+			camera.addShader(shader);
+		}
+	}
+}
+
 function shakeCamFor(character:Character):Void {
 	if (shakeMap.get(character.curCharacter) == null)
 		return;
@@ -173,8 +185,7 @@ function tweenLensDistortion(?intensity:Null<Float> = 0.01, ?area:Null<Float> = 
 		intensity: intensity,
 		area: area,
 		offset: offset
-	}, duration, ease, tweenType);
-	lensDistortionTween.play();
+	}, duration, ease, tweenType).play();
 }
 
 function resetLensDistortion(removeShader:Bool = false):Void {
