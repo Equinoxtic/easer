@@ -90,8 +90,10 @@ class WindowHandler {
 	
 	public function destroy():Void {
 		this.reset();
-		this.posTween.destroy();
-		this.sizeTween.destroy();
+		if (this.posTween != null)
+			this.posTween.destroy();
+		if (this.sizeTween != null)
+			this.sizeTween.destroy();
 		this.windowInstance = null;
 		this = null;
 	}
