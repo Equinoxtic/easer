@@ -18,6 +18,10 @@ class ContinuousSwapping extends BasicEffect {
 				this.pos++;
 				if (this.pos > this.MAX_POS) this.pos = 0;
 			});
+			switch(beat) {
+				case this.beatRange[1]:
+					this.pulse(ModIDs.CONFUSION, -8.0, 1.0);
+			}
 		});
 		this.destroy();
 	}
