@@ -19,9 +19,7 @@ class GhostTappingStateText extends FunkinText {
 	}
 	
 	private function tween():Void {
-		alphaTween = new Tween(this, {alpha: 0}, 24, 'smootherStep', 'InOut', 0.5);
-		sizeTween = new Tween(this.scale, {x: 2.0, y: 0.0}, 38, 'smootherStep', 'InOut', 0.1);
-		alphaTween.play();
-		sizeTween.play();
+		alphaTween = new Tween(this, {alpha: 0}, 24, 'smootherStep', 'InOut', 0.5).play();
+		sizeTween = new Tween(this.scale, {x: 2.0, y: 0.0}, 38, 'smootherStep', 'InOut', 0.1).play();
 	}
 }
