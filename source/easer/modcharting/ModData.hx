@@ -1,4 +1,4 @@
-package modcharting;
+package easer.modcharting;
 
 import flixel.tweens.FlxEase;
 

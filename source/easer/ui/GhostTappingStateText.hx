@@ -1,7 +1,7 @@
-package ui;
+package easer.ui;
 
 import flixel.text.FlxTextAlign;
-import lib.Tween;
+import easer.lib.Tween;
 
 class GhostTappingStateText extends FunkinText {
 	public var alphaTween:Tween;

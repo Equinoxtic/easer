@@ -1,4 +1,4 @@
-package lib;
+package easer.lib;
 
 class Tween {
 	public var localized:FlxTween;

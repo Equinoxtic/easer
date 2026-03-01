@@ -1,9 +1,9 @@
-package modcharting;
+package easer.modcharting;
 
-import modcharting.ModResetParams;
-import modcharting.ModData;
-import modcharting.ModResetParams;
-import modcharting.ModIDs;
+import easer.modcharting.ModResetParams;
+import easer.modcharting.ModData;
+import easer.modcharting.ModResetParams;
+import easer.modcharting.ModIDs;
 
 import modchart.Manager;
 

@@ -1,9 +1,9 @@
-package modcharting.effects;
+package easer.modcharting.effects;
 
-import modcharting.ModIDs;
-import modcharting.ModIDs;
+import easer.modcharting.ModIDs;
+import easer.modcharting.ModIDs;
 
-import modcharting.BasicEffect;
+import easer.modcharting.BasicEffect;
 
 class NoteDisplacement extends BasicEffect {
 	private final STRUM_DATA:Map<Int, Dynamic> = [

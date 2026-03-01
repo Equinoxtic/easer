@@ -1,11 +1,11 @@
 package;
 
-import lib.Tween;
+import easer.lib.Tween;
 import flixel.text.FlxTextAlign;
-import ui.FilmBorder;
-import ui.GhostTappingStateText;
-import ui.TweenedOutwardLensCircle;
-import ui.system.WindowHandler;
+import easer.ui.FilmBorder;
+import easer.ui.GhostTappingStateText;
+import easer.ui.TweenedOutwardLensCircle;
+import easer.ui.system.WindowHandler;
 
 var filmBorder:FilmBorder;
 

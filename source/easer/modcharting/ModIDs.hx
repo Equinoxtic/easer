@@ -7,7 +7,7 @@
 	
 **/
 
-package modcharting;
+package easer.modcharting;
 
 class ModIDs {
 	public static final TIPSY:String 			= 'Tipsy';

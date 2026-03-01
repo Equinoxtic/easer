@@ -1,7 +1,7 @@
-package modcharting.effects;
+package easer.modcharting.effects;
 
-import modcharting.BasicEffect;
-import modcharting.ModIDs;
+import easer.modcharting.BasicEffect;
+import easer.modcharting.ModIDs;
 
 class RandomizedNoteGrow extends BasicEffect {
 	private final POSSIBLE_LANE_COMBINATIONS:Array<Array<Int>> = [

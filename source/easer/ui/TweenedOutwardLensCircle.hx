@@ -1,6 +1,6 @@
-package ui;
+package easer.ui;
 
-import lib.Tween;
+import easer.lib.Tween;
 
 class TweenedOutwardLensCircle extends FlxSprite {
 	public function new(initialAlpha:Float, initialSize:{width:Float, height:Float}) {

@@ -1,4 +1,4 @@
-package;
+package easer;
 
 class Constants {
 	// we use hex because regular integers are lame

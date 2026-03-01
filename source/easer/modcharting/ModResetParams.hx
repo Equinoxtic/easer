@@ -1,4 +1,4 @@
-package modcharting;
+package easer.modcharting;
 
 class ModResetParams {
 	public var modifiers:Array<String> = [];

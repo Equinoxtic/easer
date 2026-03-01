@@ -1,4 +1,4 @@
-package lib;
+package easer.lib;
 
 import Sys;
 

@@ -1,6 +1,6 @@
-package modcharting;
+package easer.modcharting;
 
-import modcharting.ModIDs;
+import easer.modcharting.ModIDs;
 
 class Registry {
 	public static final MODS:Map<String, Dynamic> = [

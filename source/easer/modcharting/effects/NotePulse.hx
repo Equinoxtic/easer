@@ -1,8 +1,8 @@
-package modcharting.effects;
+package easer.modcharting.effects;
 
-import modcharting.ModIDs;
-import modcharting.BasicEffect;
-import modcharting.ModchartLib;
+import easer.modcharting.ModIDs;
+import easer.modcharting.BasicEffect;
+import easer.modcharting.ModchartLib;
 
 import modchart.Manager;
 

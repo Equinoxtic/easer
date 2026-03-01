@@ -1,6 +1,6 @@
-package ui;
+package easer.ui;
 
-import lib.Tween;
+import easer.lib.Tween;
 
 class FilmBorder extends FlxSprite {
 	private var savedHeight:Float = 0.0;

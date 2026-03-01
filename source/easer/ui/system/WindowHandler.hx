@@ -1,11 +1,11 @@
-package ui.system;
+package easer.ui.system;
 
-import Constants;
+import easer.Constants;
 
 import lime.app.Application;
 
-import lib.Tween;
-import lib.Wave;
+import easer.lib.Tween;
+import easer.lib.Wave;
 
 class WindowHandler {
 	public var windowInstance;

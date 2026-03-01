@@ -1,4 +1,4 @@
-package backend;
+package easer.backend;
 
 class SongMeta {
 	public static function getCredits(song:ChartData):Dynamic {

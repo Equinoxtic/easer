@@ -1,8 +1,8 @@
-package modcharting.effects;
+package easer.modcharting.effects;
 
-import modcharting.ModIDs;
+import easer.modcharting.ModIDs;
 
-import modcharting.BasicEffect;
+import easer.modcharting.BasicEffect;
 
 class ContinuousSwapping extends BasicEffect {
 	private final SWAP_DATA:Array<Int> = [ 0.5, 1.0, 0.5, 0.0 ];
