@@ -1,6 +1,9 @@
 # general
 [Dd]ata/*
 [Ss]ongs/*
+[Ii]mages/*
+
+# exclusions
 ![Dd]ata/[Ee]vents/
-[Ii]mages/
+![Ii]mages/*.png
 !*.hx
