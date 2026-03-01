@@ -7,8 +7,8 @@
 		},
 		{
 			"name": "Border Height",
-			"type": "Float(-50.0, 50.0, 0.01, 1)",
-			"defaultValue": 10.0
+			"type": "Float(-10.0, 10.0, 0.001, 3)",
+			"defaultValue": 1.0
 		},
 		{
 			"name": "Tween Time (Steps, IF NOT CLASSIC)",
@@ -26,14 +26,9 @@
 			"defaultValue": "In"
 		},
 		{
-			"name": "Should Pulsate? (Must have tweening on)",
+			"name": "Should Pulsate Relatively? (Must have tweening on)",
 			"type": "Bool",
 			"defaultValue": false
-		},
-		{
-			"name": "Is Pulsate Relative?",
-			"type": "Bool",
-			"defaultValue": true
 		}
 	]
 }

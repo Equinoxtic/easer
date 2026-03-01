@@ -2,9 +2,12 @@ package;
 
 import lib.Tween;
 import flixel.text.FlxTextAlign;
+import ui.FilmBorder;
 import ui.GhostTappingStateText;
 import ui.TweenedOutwardLensCircle;
 import ui.system.WindowHandler;
+
+var filmBorder:FilmBorder;
 
 var invertShader:CustomShader;
 var lensDistortionShader:CustomShader;
@@ -86,11 +89,15 @@ function create():Void {
 }
 
 function onStrumCreation(event:StrumCreationEvent):Void {
-	filmBorderGrp = new FlxSpriteGroup();
-	filmBorderGrp.add(drawFilmBorder(0, DEFAULT_FILM_BORDER_HEIGHT, -180, 1));
-	filmBorderGrp.add(drawFilmBorder(FlxG.height, DEFAULT_FILM_BORDER_HEIGHT, 180, -1));
+	/*filmBorderGrp = new FlxSpriteGroup();
+	filmBorderGrp.add(drawFilmBorder(FlxG.height * -0.019, DEFAULT_FILM_BORDER_HEIGHT, 0, 0));
+	filmBorderGrp.add(drawFilmBorder(FlxG.height, DEFAULT_FILM_BORDER_HEIGHT, 0, 1));
 	filmBorderGrp.cameras = [camHUD];
-	add(filmBorderGrp);
+	add(filmBorderGrp);*/
+	filmBorder = new FilmBorder();
+	filmBorder.cameras = [camHUD];
+	add(filmBorder);
+	spriteCache.push(filmBorder);
 }
 
 function update(elapsed:Float):Void {
@@ -240,24 +247,17 @@ function onEvent(event):Void {
 				duration:				curEvent.params[2],
 				ease:					curEvent.params[3],
 				tweenType:				curEvent.params[4],
-				pulsates:				curEvent.params[5],
-				relativePulsate:		curEvent.params[6]
+				pulsates:				curEvent.params[5]
 			};
-			filmBorderGrp.forEachAlive((spr:FlxSprite) -> {
-				savedFilmBorderHeight = spr.scale.y;
-				if (parameters.isTweened) {
-					var heightTweenValue:Float = parameters.height * 0.85;
-					if (parameters.pulsates) {
-						spr.scale.set(spr.scale.x, (parameters.relativePulsate) ? savedFilmBorderHeight + parameters.height : parameters.height);
-						heightTweenValue = (parameters.relativePulsate) ? savedFilmBorderHeight : parameters.height;
-					}
-					filmBorderTween = new Tween(spr.scale, {y: heightTweenValue}, parameters.duration, parameters.ease, parameters.tweenType).play();
-					tweenCache.push(filmBorderTween);
+			if (parameters.isTweened) {
+				if (parameters.pulsates) {
+					filmBorder.pulsate(parameters.height, parameters.duration, parameters.ease, parameters.tweenType);
 				} else {
-					filmBorderTween.cancel();
-					spr.scale.set(spr.scale.x, parameters.height);
+					filmBorder.tween(parameters.height, parameters.duration, parameters.ease, parameters.tweenType);
 				}
-			});
+			} else {
+				filmBorder.resize(parameters.height);
+			}
 	}
 }
 
@@ -309,8 +309,8 @@ function drawFilmBorder(y:Float, height:Float, angle:Float, yOrigin:Float):FlxSp
 	borderSpr.color = 0xFF000000;
 	borderSpr.scale.set(FlxG.width * 5, height);
 	borderSpr.angle = angle;
-	borderSpr.screenCenter(FlxAxes.X);
 	borderSpr.origin.set(0.5, yOrigin);
+	borderSpr.updateHitbox();
 	spriteCache.push(borderSpr);
 	return borderSpr;
 }
