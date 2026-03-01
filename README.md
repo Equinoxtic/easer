@@ -1,6 +1,6 @@
-# Solar Engine
+# Easer
 
-Solar Engine is a framework/API with the purpose of making the process of creating modcharts easier; built on-top of [FunkinModchart](https://github.com/theoo-h/FunkinModchart/tree/main). This is only exclusive for [Codename Engine](https://github.com/CodenameCrew/CodenameEngine), and is mostly intended for [*softcoded* scripts (hscripts)](https://codename-engine.com/wiki/modding/scripting/).
+Easer is a framework/API with the purpose of making the process of creating modcharts easier; built on-top of [FunkinModchart](https://github.com/theoo-h/FunkinModchart/tree/main). This is only exclusive for [Codename Engine](https://github.com/CodenameCrew/CodenameEngine), and is mostly intended for [*softcoded* scripts (hscripts)](https://codename-engine.com/wiki/modding/scripting/).
 
 ## Prerequisites
 
