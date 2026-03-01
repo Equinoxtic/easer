@@ -88,12 +88,7 @@ function create():Void {
 	spriteCache.push(lensCircleBlack);
 }
 
-function onStrumCreation(event:StrumCreationEvent):Void {
-	/*filmBorderGrp = new FlxSpriteGroup();
-	filmBorderGrp.add(drawFilmBorder(FlxG.height * -0.019, DEFAULT_FILM_BORDER_HEIGHT, 0, 0));
-	filmBorderGrp.add(drawFilmBorder(FlxG.height, DEFAULT_FILM_BORDER_HEIGHT, 0, 1));
-	filmBorderGrp.cameras = [camHUD];
-	add(filmBorderGrp);*/
+function onPreGenerateStrums(event:AmountEvent):Void {
 	filmBorder = new FilmBorder();
 	filmBorder.cameras = [camHUD];
 	add(filmBorder);
