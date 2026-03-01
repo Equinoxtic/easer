@@ -12,6 +12,7 @@ class FilmBorder extends FlxSprite {
 		super(0, 0, Paths.image("FilmBorder"));
 		this.antialiasing = false;
 		this.scale.set(FlxG.width * 8, 2.0);
+		this.scrollFactor.set(0, 0);
 		this.updateHitbox();
 		this.screenCenter();
 	}
