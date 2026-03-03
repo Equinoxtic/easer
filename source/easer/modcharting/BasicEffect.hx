@@ -8,20 +8,52 @@ import modchart.Manager;
 class BasicEffect {
 	public var manager:Manager;
 	
+	/**
+		The stored parameters of the `BasicEffect`.
+	**/
 	public var parameters:Dynamic;
 	
+	/**
+		The standard beat range. (Uses Integers)
+	**/
 	public var beatRange:Array<Int> = [ 0, 0 ];
+	
+	/**
+		The intervaled beat range. (Uses Floats with an interval)
+	**/
 	public var iBeatRange:{min:Float, max:Float, interval:Float} = {min: 0.0, max: 0.0, interval: 0.0};
+	
+	/**
+		The integer equivalent of the interval in beats.
+	**/
 	public var modulus:Int = 4;
+	
+	/**
+		The duration of each consecutive ease/tween for the `BasicEffect`.
+	**/
 	public var duration:Float = 1.0;
+	
+	/**
+		The value of the modifiers used for the `BasicEffect`
+	**/
 	public var value:Float = 0.0;
+	
+	/**
+		The applied easing (`FlxEase`) function to be used for the `BasicEffect`.
+	**/
 	public var ease:Float->Float = FlxEase.expoOut;
+	
+	/**
+		Used to determine whether or not values should be flipped/reversed.
+	**/
 	public var inverse:Bool = false;
+	
+	/**
+		The field/player targetted for the `BasicEffect`.
+	**/
 	public var player:Int = -1;
 	
 	public var beat:Float = 0;
-	
-	private var callbacks:Array<Dynamic> = [];
 	
 	/**
 		Create a new custom modchart effect.
@@ -92,23 +124,32 @@ class BasicEffect {
 		this.queueEase(name, 0.0, lifetime);
 	}
 	
+	/**
+		Allows values to be inverted once `this.inverse` to either `true` or `false`.
+		@param value The value to inverse
+	**/
 	public inline function invert(value:Float):Float
 		return (this.inverse) ? -value : value;
 	
+	/**
+		Flips values between the `value` itself and `0.0` once `this.inverse` is set to either `true` or `false`.
+		@param value The value to flip
+	**/
 	public inline function flip(value:Float):Float
 		return (this.inverse) ? 0.0 : value;
 	
-	public inline function calculateDuration(duration:Float, multiplier:Float):Float
-		return (duration * ((multiplier != null) ? multiplier : 1));
-	
+	/**
+		Destroys the instance of the `BasicEffect` for memory efficiency costs.
+	**/
 	public function destroy():Void {
 		this.manager = null;
 		if (this.parameters != null)
 			this.parameters = null;
-		// for (f in callbacks)
-		// 	f = null;
 		this = null;
 	}
+	
+	private inline function calculateDuration(duration:Float, multiplier:Float):Float
+		return (duration * ((multiplier != null) ? multiplier : 1));
 	
 	/**
 		Iterates through the range of beats of the effect.
