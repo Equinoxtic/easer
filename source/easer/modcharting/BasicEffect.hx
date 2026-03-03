@@ -3,7 +3,8 @@ package easer.modcharting;
 import modchart.Manager;
 
 /**
-	The basic class for all the effects used for modcharting.
+	The basic class for all the effects used for modcharting.\
+	**Effects** are compact blocks of code that combine several modifiers with added functionality of being able to repeat, inverse, flip, or pulse the values in intervals.
 **/
 class BasicEffect {
 	public var manager:Manager;
