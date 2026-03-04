@@ -74,7 +74,7 @@ class ModchartLib {
 	}
 	
 	/**
-		## DEPRECATED / LEGACY FUNCTION! Use `queueModsForBeat` instead.
+		## DEPRECATED / LEGACY FUNCTION! Use `queueReset` instead.
 		Sets each modifiers value back to `0.0` at specific beats within a list of the given parameters with easing.
 		@param manager The instance of the modchart manager
 		@param parametersList The parameters of each modifier to be reset
