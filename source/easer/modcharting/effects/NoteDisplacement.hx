@@ -24,7 +24,7 @@ class NoteDisplacement extends BasicEffect {
 	public function new(manager:Manager, params:Dynamic) {
 		super(manager, params);
 		this.tornadoEnabled = params.tornadoEnabled;
-		this.onBeat((beat:Int) -> {
+		this.onIntBeats((beat:Int, section:Any) -> {
 			this.perModOfBeat(beat, null, (beat:Int) -> {
 				this.spaceOut();
 				this.tornadoPulse();

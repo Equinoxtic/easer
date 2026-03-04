@@ -13,18 +13,18 @@ class ModchartLib {
 		@param manager The instance of the modchart manager
 		@param beat When should the modifiers be set/eased
 		@param list The list of modifiers to be set/eased
-		@return `Any`
+		@return `Manager`
 	**/
-	public static function queueForBeat(manager:Manager, beat:Float, list:Array<{modifiers:Array<String>, value:Float, length:Float, ease:Float->Float, player:Int}>):Any {
+	public static function queueForBeat(manager:Manager, beat:Float, list:Array<{modifiers:Array<String>, value:Float, length:Float, ease:Float->Float, player:Int}>):Manager {
 		for (params in list) {
 			for (mod in params.modifiers) {
-				if (params.length == null || params.ease == null)
-					manager.set(mod, beat, params.value, params.player);
-				else
+				if (params.length != null && params.ease != null)
 					manager.ease(mod, beat, params.length, params.value, params.ease, params.player);
+				else
+					manager.set(mod, beat, params.value, params.player);
 			}
 		}
-		return list;
+		return manager;
 	}
 	
 	/**
@@ -61,16 +61,16 @@ class ModchartLib {
 		@param list The list of modifiers to be reset
 		@return `Any`
 	**/
-	public static function queueReset(manager:Manager, list:Array<{modifiers:Array<String>, beat:Float, length:Float, ease:Float->Float, player:Int}>):Any{
+	public static function queueReset(manager:Manager, list:Array<{modifiers:Array<String>, beat:Float, length:Float, ease:Float->Float, player:Int}>):Manager {
 		for (params in list) {
 			for (mod in params.modifiers) {
-				if (params.ease == null || params.length == null)
-					manager.set(mod, params.beat, evalAlpha(mod), params.player)
-				else
+				if (params.ease != null && params.length != null)
 					manager.ease(mod, params.beat, params.length, evalAlpha(mod), params.ease, params.player);
+				else
+					manager.set(mod, params.beat, evalAlpha(mod), params.player);
 			}
 		}
-		return list;
+		return manager;
 	}
 	
 	/**

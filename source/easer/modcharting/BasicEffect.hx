@@ -15,14 +15,14 @@ class BasicEffect {
 	public var parameters:Dynamic;
 	
 	/**
-		The standard beat range. (Uses Integers)
+		The standard set of beat ranges. (Uses Integers)
 	**/
-	public var beatRange:Array<Int> = [ 0, 0 ];
+	public var iBeatRanges:Array<{start:Int, end:Int, interval:Int}> = [ { start: 0, end: 0, interval: 0 } ];
 	
 	/**
-		The intervaled beat range. (Uses Floats with an interval)
+		The intervaled sets of beat ranges. (Uses Floats with an interval)
 	**/
-	public var iBeatRange:{min:Float, max:Float, interval:Float} = {min: 0.0, max: 0.0, interval: 0.0};
+	public var fBeatRanges:Array<{start:Float, end:Float, interval:Float}> = [ { start: 0.0, end: 0.0, interval: 0.0 } ];
 	
 	/**
 		The integer equivalent of the interval in beats.
@@ -65,9 +65,8 @@ class BasicEffect {
 		if (manager == null) return;
 		this.manager = manager;
 		this.parameters = params;
-		this.beatRange = params.beatRange;
-		this.iBeatRange = params.iBeatRange;
-		this.modulus = params.modulus;
+		this.iBeatRanges = params.iBeatRanges;
+		this.fBeatRanges = params.fBeatRanges;
 		this.duration = params.length;
 		this.value = params.value;
 		this.ease = params.ease;
@@ -76,12 +75,16 @@ class BasicEffect {
 	}
 	
 	/**
-		Fires multiple callbacks within the beat range.
+		Fires multiple callbacks within the beat range. Must require to be setup with `perModOfBeat()` for repeating values in intervals.
 	**/
-	public function onBeat(func:(beat:Int)->Void):Void {
+	public function onIntBeats(func:(beat:Int, section:Any)->Void):Void {
 		if (func == null) return;
-		for (beat in this.iterateBeatRange()) {
-			func(beat);
+		for (section in this.iBeatRanges) {
+			for (beat in this.iterateIntegerBeatRange(section)) {
+				this.modulus = section.interval;
+				this.beat = beat;
+				func(this.beat, section);
+			}
 		}
 	}
 	
@@ -90,13 +93,16 @@ class BasicEffect {
 		- This does not and SHOULD NOT make use of a modulo, as modulos in programming cannot discern if the output is a decimal or not.
 		- This is used for much more controlled scenarios for faster beats.
 	**/
-	public function onIBeats(func:(beat:Float, interval:Float)->Void):Void {
+	public function onFloatBeats(func:(beat:Float, interval:Float, section:Any)->Void):Void {
 		if (func == null) return;
-		var beat:Float = this.iBeatRange.min;
-		while (beat <= this.iBeatRange.max) {
-			this.beat = beat;
-			func(this.beat, this.iBeatRange.interval);
-			beat += this.iBeatRange.interval;
+		for (section in this.fBeatRanges) {
+			var beat:Float = section.start;
+			while (beat <= section.end) {
+				this.beat = beat;
+				func(this.beat, section.interval, section);
+				beat += section.interval;
+				this.inverse = !this.inverse;
+			}
 		}
 	}
 	
@@ -109,7 +115,7 @@ class BasicEffect {
 	public function perModOfBeat(beat:Int, mod:Int = 4, func:(beat:Int)->Void):Void {
 		if (this.getModulo(beat, (mod != null && mod > 0) ? mod : this.modulus)) {
 			this.beat = beat;
-			func(Math.floor(this.beat));
+			func(beat);
 			this.inverse = !this.inverse;
 		}
 	}
@@ -139,6 +145,12 @@ class BasicEffect {
 	public inline function flip(value:Float):Float
 		return (this.inverse) ? 0.0 : value;
 	
+	public inline function getIntSection():Any
+		return this.m_intSection;
+	
+	public inline function getFloatSection():Any
+		return this.m_floatSection;
+	
 	/**
 		Destroys the instance of the `BasicEffect` for memory efficiency costs.
 	**/
@@ -156,8 +168,8 @@ class BasicEffect {
 		Iterates through the range of beats of the effect.
 		@returns IntIterator
 	**/
-	private inline function iterateBeatRange():IntIterator
-		return (this.beatRange[0]...(this.beatRange[1] + 1));
+	private inline function iterateIntegerBeatRange(section:Any):IntIterator
+		return (section.start ... (section.end + 1));
 	
 	/**
 		Gets `n mod beat`.

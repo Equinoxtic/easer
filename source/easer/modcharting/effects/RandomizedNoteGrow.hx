@@ -16,18 +16,19 @@ class RandomizedNoteGrow extends BasicEffect {
 		super(manager, params);
 		var laneSet:Array<Int> = this.POSSIBLE_LANE_COMBINATIONS[FlxG.random.int(0, this.POSSIBLE_LANE_COMBINATIONS.length - 1)];
 		this.manager.set('scale', params.startingScaleBeat, 0.0);
-		this.onIBeats((beat:Float, interval:Float) -> {
+		this.onFloatBeats((beat:Float, interval:Float, section:Any) -> {
 			var lane = laneSet[position];
 			switch(beat) {
-				case this.iBeatRange.min:
+				case section.start:
 					this.queueSet(ModIDs.ZOOM, 1.0);
-				case this.iBeatRange.max:
-					this.manager.ease(ModIDs.ZOOM, this.iBeatRange.max, 2.0, 0.0, FlxEase.expoInOut);
+				case section.end:
+					this.manager.ease(ModIDs.ZOOM, section.end, 2.0, 0.0, FlxEase.expoInOut);
 			}
 			this.queueEase('scale' + Std.string(lane), 1.0 * this.value, 1.0);
 			if (position >= laneSet.length)
 				position = laneSet.length;
 			position++;
 		});
+		this.destroy();
 	}
 }

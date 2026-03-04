@@ -11,7 +11,7 @@ class ContinuousSwapping extends BasicEffect {
 	
 	public function new(manager:Manager, params:Dynamic) {
 		super(manager, params);
-		this.onBeat((beat:Int) -> {
+		this.onIntBeats((beat:Int, section:Any) -> {
 			this.perModOfBeat(beat, null, (beat:Int) -> {
 				this.queueEase(ModIDs.OPPONENTSWAP, SWAP_DATA[pos] * this.value);
 				// 0.5 -> 1.0 -> 0.5 -> 0.0 (loops all over again as expected)
@@ -19,8 +19,8 @@ class ContinuousSwapping extends BasicEffect {
 				if (this.pos > this.MAX_POS) this.pos = 0;
 			});
 			switch(beat) {
-				case this.beatRange[1]:
-					this.pulse(ModIDs.CONFUSION, -8.0, 1.7);
+				case section.end:
+					this.pulse(ModIDs.CONFUSION, -8.0, 1.3);
 			}
 		});
 		this.destroy();

@@ -9,7 +9,7 @@ import modchart.Manager;
 class AlternatingInvert extends BasicEffect {
 	public function new(manager:Manager, params:Dynamic):Void {
 		super(manager, params);
-		this.onBeat((beat:Int) -> {
+		this.onIntBeats((beat:Int, section:Any) -> {
 			this.perModOfBeat(beat, null, (beat:Int) -> {
 				this.queueEase(ModIDs.INVERT, this.flip(1.0));
 			});

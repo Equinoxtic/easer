@@ -20,7 +20,7 @@ class NotePulse extends BasicEffect {
 	public function new(manager:Manager, params:Dynamic) {
 		super(manager, params);
 		this.angle = this.parameters.angle;
-		this.onBeat((beat:Int) -> {
+		this.onIntBeats((beat:Int, section:Any) -> {
 			this.perModOfBeat(beat, null, (beat:Int) -> {
 				this.pulseScale();
 				this.pulseDrunkTipsy();
