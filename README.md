@@ -37,10 +37,10 @@ function postCreate():Void
 		Sample preset of mods that need to be registered. You're able to have a set list for specific songs.
 		- P.S.: This system is getting reworked in the future — top priority =)
 	**/
-	Registry.MODS.subscribe(modcharter);
+	Registry.MODS.subscribe(manager);
 
 	// Apply modifiers (at beat 0).
-	modcharter.queueForBeat(STARTING_BEAT, [
+	manager.queueForBeat(STARTING_BEAT, [
 		{
 			modifiers: [ ModIDs.DRUNK, ModIDs.TIPSY ],
 			value: 0.4
@@ -48,7 +48,7 @@ function postCreate():Void
 	]);
 
 	// Apply NoteDisplacement Effect.
-	new NoteDisplacement(modcharter, {
+	new NoteDisplacement(manager, {
 		iBeatRanges: [
 			{ start: 0, end: 16, interval: 2 }
 		],
