@@ -302,10 +302,10 @@ function resetLensDistortion(removeShader:Bool = false):Void {
 function drawFilmBorder(y:Float, height:Float, angle:Float, yOrigin:Float):FlxSprite {
 	var borderSpr:FlxSprite = new FlxSprite(0, y);
 	borderSpr.color = 0xFF000000;
-	borderSpr.scale.set(FlxG.width * 5, height);
+	borderSpr.scale.set(FlxG.width * 1.5, height);
 	borderSpr.angle = angle;
 	borderSpr.origin.set(0.5, yOrigin);
-	borderSpr.updateHitbox();
+	borderSpr.screenCenter();
 	spriteCache.push(borderSpr);
 	return borderSpr;
 }
