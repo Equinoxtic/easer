@@ -8,9 +8,29 @@ import easer.modcharting.ModIDs;
 import modchart.Manager;
 
 class ModchartLib {
+	/**
+		Quickly queue a list of modifiers at a specific beat.
+		@param manager The instance of the modchart manager
+		@param beat When should the modifiers be set/eased
+		@param mods The list of modifiers to be set/eased
+		@return `Array<ModData>`
+	**/
+	public static function queueModsForBeat(manager:Manager, beat:Int, mods:Array<ModData>):Array<ModData> {
+		for (mod in mods) {
+			if (mod.length == null || mod.ease == null)
+				manager.set(mod.name, beat, mod.value, mod.player);
+			else
+				manager.ease(mod.name, beat, mod.length, mod.value, mod.ease, mod.player);
+		}
+		return mods;
+	}
 	
-	/***
-		
+	/**
+		## DEPRECATED / LEGACY FUNCTION! Use `queueModsForBeat` instead.
+		Quickly set a list of modifiers at a specific beat.
+		@param manager The instance of the modchart manager
+		@param beat When should the modifiers be set
+		@param mods The list of modifiers to be set
 	**/
 	public static function setModsOnBeat(manager:Manager, beat:Int, mods:Array<ModData>):Array<ModData> {
 		for (mod in mods) {
@@ -20,6 +40,7 @@ class ModchartLib {
 	}
 	
 	/**
+		## DEPRECATED / LEGACY FUNCTION! Use `queueModsForBeat` instead.
 		Quickly ease a list of modifiers at a specific beat.
 		@param manager The instance of the modchart manager
 		@param beat When should the modifiers be eased
