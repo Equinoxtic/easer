@@ -58,9 +58,10 @@ class WindowHandler {
 	
 	public function sineWave(amplitude:Float, frequency:Float):Void {
 		if (!this.sineWaveEnabled) return;
-		var newX:Int = Std.int(FlxMath.lerp(this.windowInstance.x, Constants.DEFAULT_WINDOW_X + ((amplitude / this.waveDampeningX) * Math.cos(Wave.create(frequency))), 0.1));
-		var newY:Int = Std.int(FlxMath.lerp(this.windowInstance.y, Constants.DEFAULT_WINDOW_Y + ((amplitude / this.waveDampeningY) * Math.sin(Wave.create(frequency))), 0.1));
-		this.position(newX, newY);
+		this.position(
+			Std.int(FlxMath.lerp(this.windowInstance.x, Constants.DEFAULT_WINDOW_X + ((amplitude / this.waveDampeningX) * Math.cos(Wave.create(frequency))), 0.1)),
+			Std.int(FlxMath.lerp(this.windowInstance.y, Constants.DEFAULT_WINDOW_Y + ((amplitude / this.waveDampeningY) * Math.sin(Wave.create(frequency))), 0.1))
+		);
 	}
 	
 	public inline function setSineWaveState(state:Bool):Void
