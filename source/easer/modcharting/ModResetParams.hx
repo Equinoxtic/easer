@@ -1,5 +1,8 @@
 package easer.modcharting;
 
+/**
+	## DEPRECATED / LEGACY CLASS! Not recommended to use.
+**/
 class ModResetParams {
 	public var modifiers:Array<String> = [];
 	public var beat:Int = 0;

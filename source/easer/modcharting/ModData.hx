@@ -2,6 +2,9 @@ package easer.modcharting;
 
 import flixel.tweens.FlxEase;
 
+/**
+	## DEPRECATED / LEGACY CLASS! Not recommended to use.
+**/
 class ModData {	
 	public var name:String = "";
 	public var length:Float = 1.0;

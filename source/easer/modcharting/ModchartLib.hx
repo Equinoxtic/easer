@@ -9,20 +9,22 @@ import modchart.Manager;
 
 class ModchartLib {
 	/**
-		Quickly queue a list of modifiers at a specific beat.
+		Quickly queue a list of modifiers at a specific beat with given parameters.
 		@param manager The instance of the modchart manager
 		@param beat When should the modifiers be set/eased
-		@param mods The list of modifiers to be set/eased
-		@return `Array<ModData>`
+		@param list The list of modifiers to be set/eased
+		@return `Any`
 	**/
-	public static function queueModsForBeat(manager:Manager, beat:Int, mods:Array<ModData>):Array<ModData> {
-		for (mod in mods) {
-			if (mod.length == null || mod.ease == null)
-				manager.set(mod.name, beat, mod.value, mod.player);
-			else
-				manager.ease(mod.name, beat, mod.length, mod.value, mod.ease, mod.player);
+	public static function queueForBeat(manager:Manager, beat:Float, list:Array<{modifiers:Array<String>, value:Float, length:Float, ease:Float->Float, player:Int}>):Any {
+		for (params in list) {
+			for (mod in params.modifiers) {
+				if (params.length == null || params.ease == null)
+					manager.set(mod, beat, params.value, params.player);
+				else
+					manager.ease(mod, beat, params.length, params.value, params.ease, params.player);
+			}
 		}
-		return mods;
+		return list;
 	}
 	
 	/**
@@ -54,6 +56,25 @@ class ModchartLib {
 	}
 	
 	/**
+		Quickly queue a reset of a list of modifiers with their consecutive beats and given parameters.
+		@param manager The instance of the modchart manager
+		@param list The list of modifiers to be reset
+		@return `Any`
+	**/
+	public static function queueReset(manager:Manager, list:Array<{modifiers:Array<String>, beat:Float, length:Float, ease:Float->Float, player:Int}>):Any{
+		for (params in list) {
+			for (mod in params.modifiers) {
+				if (params.ease == null || params.length == null)
+					manager.set(mod, params.beat, evalAlpha(mod), params.player)
+				else
+					manager.ease(mod, params.beat, params.length, evalAlpha(mod), params.ease, params.player);
+			}
+		}
+		return list;
+	}
+	
+	/**
+		## DEPRECATED / LEGACY FUNCTION! Use `queueModsForBeat` instead.
 		Sets each modifiers value back to `0.0` at specific beats within a list of the given parameters with easing.
 		@param manager The instance of the modchart manager
 		@param parametersList The parameters of each modifier to be reset
