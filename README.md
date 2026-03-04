@@ -8,7 +8,7 @@ Easer is a framework/API with the purpose of making the process of creating modc
 2. Required knowledge of [NotITG](https://www.noti.tg/) modcharts AND FunkinModchart.
 3. Basic/Intermediate knowledge of programming in Haxe.
 
-## Code Snippet
+## Code Sample
 
 ```hx
 // Imports (Easer)
@@ -29,32 +29,32 @@ var manager:Manager;
 
 function postCreate():Void
 {
-    // Initialize manager (FunkinModchart)
-    manager = new Manager();
-    add(manager);
-    
-    /**
-        Sample preset of mods that need to be registered. You're able to have a set list for specific songs.
-        - P.S.: This system is getting reworked in the future — top priority =)
-    **/
-    Registry.MODS.subscribe(modcharter);
+	// Initialize manager (FunkinModchart)
+	manager = new Manager();
+	add(manager);
+	
+	/**
+		Sample preset of mods that need to be registered. You're able to have a set list for specific songs.
+		- P.S.: This system is getting reworked in the future — top priority =)
+	**/
+	Registry.MODS.subscribe(modcharter);
 
-    // Apply modifiers (at beat 0).
-    modcharter.setModsOnBeat(0, [
-        new ModData(ModIDs.DRUNK, { value: 0.4 }),
-        new ModData(ModIDs.TIPSY, { value: 0.4 })
-    ]);
+	// Apply modifiers (at beat 0).
+	modcharter.setModsOnBeat(0, [
+		new ModData(ModIDs.DRUNK, { value: 0.4 }),
+		new ModData(ModIDs.TIPSY, { value: 0.4 })
+	]);
 
-    // Apply NoteDisplacement Effect.
-    new NoteDisplacement(modcharter, {
-        beatRange: [4, 16],
-        modulus: 2,
-        length: 5.0,
-        value: 1.5,
-        ease: FlxEase.expoOut,
-        tornadoEnabled: false,
-        inverse: false
-    });
+	// Apply NoteDisplacement Effect.
+	new NoteDisplacement(modcharter, {
+		beatRange: [4, 16],
+		modulus: 2,
+		length: 5.0,
+		value: 1.5,
+		ease: FlxEase.expoOut,
+		tornadoEnabled: false,
+		inverse: false
+	});
 }
 ```
 
