@@ -40,15 +40,18 @@ function postCreate():Void
 	Registry.MODS.subscribe(modcharter);
 
 	// Apply modifiers (at beat 0).
-	modcharter.setModsOnBeat(0, [
-		new ModData(ModIDs.DRUNK, { value: 0.4 }),
-		new ModData(ModIDs.TIPSY, { value: 0.4 })
+	modcharter.queueForBeat(STARTING_BEAT, [
+		{
+			modifiers: [ ModIDs.DRUNK, ModIDs.TIPSY ],
+			value: 0.4
+		}
 	]);
 
 	// Apply NoteDisplacement Effect.
 	new NoteDisplacement(modcharter, {
-		beatRange: [4, 16],
-		modulus: 2,
+		iBeatRanges: [
+			{ start: 0, end: 16, interval: 2 }
+		],
 		length: 5.0,
 		value: 1.5,
 		ease: FlxEase.expoOut,
