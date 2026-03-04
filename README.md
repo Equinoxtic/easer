@@ -40,7 +40,7 @@ function postCreate():Void
 	Registry.MODS.subscribe(manager);
 
 	// Apply modifiers (at beat 0).
-	manager.queueForBeat(STARTING_BEAT, [
+	manager.queueForBeat(0, [
 		{
 			modifiers: [ ModIDs.DRUNK, ModIDs.TIPSY ],
 			value: 0.4
