@@ -11,7 +11,7 @@ class AlternatingInvert extends BasicEffect {
 		super(manager, params);
 		this.onIntBeats((beat:Int, section:Any) -> {
 			this.perModOfBeat(beat, null, (beat:Int) -> {
-				this.queueEase(ModIDs.INVERT, this.flip(1.0));
+				this.queueEase(ModIDs.INVERT, this.flip(this.value));
 			});
 		});
 		this.destroy();

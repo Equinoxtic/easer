@@ -80,6 +80,8 @@ class BasicEffect {
 	public function onIntBeats(func:(beat:Int, section:Any)->Void):Void {
 		if (func == null) return;
 		for (section in this.iBeatRanges) {
+			// Fixes a certain bug where values used in `effects` would not inverse. Now, upon entering a new section, we simply reset `inverse` back to `parameters.inverse` to identify whether it is `true` or `false`.
+			this.inverse = this.parameters.inverse;
 			for (beat in this.iterateIntegerBeatRange(section)) {
 				this.modulus = section.interval;
 				this.beat = beat;
@@ -97,6 +99,7 @@ class BasicEffect {
 		if (func == null) return;
 		for (section in this.fBeatRanges) {
 			var beat:Float = section.start;
+			this.inverse = this.parameters.inverse;
 			while (beat <= section.end) {
 				this.beat = beat;
 				func(this.beat, section.interval, section);
